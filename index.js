@@ -135,53 +135,118 @@
 //   await browser.close();
 // })();
 
+// const { chromium } = require("playwright-extra");
+// const stealth = require("puppeteer-extra-plugin-stealth")();
+// chromium.use(stealth);
+// (async () => {
+//   const browser = await chromium.launch({ headless: false });
+//   const page = await browser.newPage();
+//   await page.goto(
+//     "https://www.linkedin.com/uas/login?session_redirect=https%3A%2F%2Fwww.linkedin.com%2Ffeed%2F"
+//   );
+//   await page.fill("input#username", "");
+//   await page.fill("input#password", "");
+//   const sign_in_button = await page.waitForSelector(
+//     '[data-litms-control-urn="login-submit"]'
+//   );
+//   await sign_in_button.click();
+//   // await page.fill('[role="combobox"]', "ruby on rails");
+//   query = "ruby on rails";
+//   await page.goto(
+//     "https://www.linkedin.com/search/results/content/?keywords=" + query
+//   );
+//   await page.waitForSelector('[role="combobox"]');
+//   // await page.keyboard.press("Enter");
+//   let i = 0;
+//   do {
+//     await page.mouse.wheel(0, 1000);
+//     await page.waitForTimeout(250);
+//     i += 1;
+//   } while (i < 3);
+//   const list_items = await page.$$('ul[role="list"] > li');
+//   for (const [index, list_item] of list_items.entries()) {
+//     try {
+//       const comment_button = await list_item.$(
+//         ".social-actions-button.comment-button"
+//       );
+//       await comment_button.scrollIntoViewIfNeeded();
+//       await comment_button.click();
+//       const text_editor = await list_item.$(".ql-editor");
+//       await text_editor.click();
+//       await text_editor.fill(`Test comment #${index + 1}`);
+//       const button = await page.waitForSelector(
+//         "form > div > div > div > div > button"
+//       );
+//       const submit_button = await list_item.$(
+//         "form > div > div > div > div > button"
+//       );
+//       await submit_button.click();
+//       await page.waitForTimeout(2000);
+//     } catch (error) {
+//       console.log(error);
+//     }
+//   }
+//   await browser.close();
+// })();
+
 const { chromium } = require("playwright-extra");
 const stealth = require("puppeteer-extra-plugin-stealth")();
 chromium.use(stealth);
 (async () => {
   const browser = await chromium.launch({ headless: false });
   const page = await browser.newPage();
-  await page.goto(
-    "https://www.linkedin.com/uas/login?session_redirect=https%3A%2F%2Fwww.linkedin.com%2Ffeed%2F"
-  );
-  await page.fill("input#username", "");
-  await page.fill("input#password", "");
-  const sign_in_button = await page.waitForSelector(
-    '[data-litms-control-urn="login-submit"]'
-  );
+  await page.goto("https://www.facebook.com/login.php");
+  await page.evaluate(() => {
+    document
+      .querySelectorAll('[aria-label="Refuser les cookies optionnels"]')[0]
+      .click();
+  });
+  await page.fill("input#email", "");
+  await page.fill("input#pass", "");
+  const sign_in_button = await page.waitForSelector("button#loginbutton");
   await sign_in_button.click();
-  // await page.fill('[role="combobox"]', "ruby on rails");
-  query = "ruby on rails";
-  await page.goto(
-    "https://www.linkedin.com/search/results/content/?keywords=" + query
-  );
-  await page.waitForSelector('[role="combobox"]');
-  // await page.keyboard.press("Enter");
+  await page.waitForSelector('input[role="combobox"]');
+  query = "ruby";
+  await page.goto("https://www.facebook.com/search/posts/?q=" + query);
+  await page.waitForSelector('input[role="combobox"]');
   let i = 0;
   do {
     await page.mouse.wheel(0, 1000);
     await page.waitForTimeout(250);
     i += 1;
   } while (i < 3);
-  const list_items = await page.$$('ul[role="list"] > li');
+  const list_items = await page.$$('div[role="feed"] > div');
   for (const [index, list_item] of list_items.entries()) {
     try {
       const comment_button = await list_item.$(
-        ".social-actions-button.comment-button"
+        '[aria-label="Laissez un commentaire"]'
       );
       await comment_button.scrollIntoViewIfNeeded();
       await comment_button.click();
-      const text_editor = await list_item.$(".ql-editor");
-      await text_editor.click();
-      await text_editor.fill(`Test comment #${index + 1}`);
-      const button = await page.waitForSelector(
-        "form > div > div > div > div > button"
+      const editable_content = await page.waitForSelector(
+        '[contenteditable="true"]'
       );
-      const submit_button = await list_item.$(
-        "form > div > div > div > div > button"
+      await editable_content.click();
+      await editable_content.fill(`Test comment #${index + 1}`);
+      const submit_button = await page.waitForSelector(
+        'span > div[aria-label="Commenter"]'
       );
       await submit_button.click();
+      const group_checkbox = await page.waitForSelector(
+        '[name="agree-to-group-rules"]'
+      );
+      if (group_checkbox) {
+        await group_checkbox.click();
+        const group_submit = await page.waitForSelector(
+          '[aria-label="Envoyer"]'
+        );
+        await group_submit.click();
+      }
       await page.waitForTimeout(2000);
+      const close_button = await page.waitForSelector(
+        'div[aria-label="Fermer"]'
+      );
+      await close_button.click();
     } catch (error) {
       console.log(error);
     }
