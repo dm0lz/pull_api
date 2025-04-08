@@ -35,7 +35,7 @@ class Social::Linkedin::PostsReplierService < BaseService
           await page.mouse.wheel(0, 1000);
           await page.waitForTimeout(250);
           i += 1;
-        } while (i < 5);
+        } while (i < 50);
         const list_items = await page.$$('ul[role="list"] > li');
         for (const [index, list_item] of list_items.entries()) {
           try {

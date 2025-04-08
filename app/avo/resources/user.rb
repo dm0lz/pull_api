@@ -11,7 +11,7 @@ class Avo::Resources::User < Avo::BaseResource
     field :role, as: :text
     field :api_token, as: :text
     field :api_credit, as: :number
-    field :created_at, as: :datetime
+    field :created_at, as: :text
     field :sessions, as: :has_many
     field :api_sessions, as: :has_many
   end

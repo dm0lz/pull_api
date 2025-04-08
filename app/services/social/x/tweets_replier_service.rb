@@ -1,5 +1,5 @@
 class Social::X::TweetsReplierService < BaseService
-  def initialize(search, payload, options = "{headless: true}")
+  def initialize(search, payload, options = "{headless: false}")
     @search = search
     @payload = payload
     @options = options.gsub("\\", "")

@@ -16,11 +16,18 @@ function toggleAccordion(id) {
   }
 }
 
-document.querySelectorAll(".toggle-accordion").forEach((button) => {
-  button.addEventListener("click", (event) => {
-    toggleAccordion(event.currentTarget.dataset.endpoint);
-  });
-});
+function openAccordion(id) {
+  const content = document.getElementById(id);
+  const button = content.previousElementSibling;
+  const icon = button.querySelector(".lucide-chevron-up, .lucide-chevron-down");
+  content.classList.remove("hidden");
+  if (icon) {
+    icon.classList.toggle("rotate-180");
+  }
+  if (!content.classList.contains("hidden")) {
+    Prism.highlightAll();
+  }
+}
 
 function switchTab(endpoint, tab) {
   document
@@ -47,15 +54,39 @@ function switchTab(endpoint, tab) {
   Prism.highlightAll();
 }
 
-document.querySelectorAll(".switch-tab").forEach((button) => {
-  button.addEventListener("click", (event) => {
-    switchTab(
-      event.target.parentNode.parentNode.parentNode.parentNode.id,
-      event.target.dataset.tab
-    );
-  });
-});
-
 document.addEventListener("turbo:load", () => {
   Prism.highlightAll();
+
+  document.querySelectorAll(".toggle-accordion").forEach((button) => {
+    button.addEventListener("click", (event) => {
+      toggleAccordion(event.currentTarget.dataset.endpoint);
+    });
+  });
+
+  document.querySelectorAll(".open-accordion").forEach((button) => {
+    button.addEventListener("click", (event) => {
+      openAccordion(event.currentTarget.dataset.endpoint);
+    });
+  });
+
+  document.querySelectorAll(".switch-tab").forEach((button) => {
+    button.addEventListener("click", (event) => {
+      switchTab(
+        event.target.parentNode.parentNode.parentNode.parentNode.id,
+        event.target.dataset.tab
+      );
+    });
+  });
+
+  const hash = window.location.hash;
+  if (hash) {
+    const link = document.querySelector('[href="' + hash + '"]');
+    if (link.dataset.endpoint) {
+      openAccordion(link.dataset.endpoint);
+    }
+    const el = document.querySelector(hash);
+    if (el) {
+      el.scrollIntoView({ behavior: "smooth" });
+    }
+  }
 });

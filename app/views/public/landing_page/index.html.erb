@@ -1,21 +1,5 @@
 <div class="pointer-events-auto min-h-screen bg-gradient-to-b from-gray-50 to-gray-100">
-  <!-- Header -->
-  <header class="bg-white shadow-sm">
-    <nav class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
-      <div class="flex items-center space-x-2">
-        <i data-lucide="shield" class="h-8 w-8 text-indigo-600"></i>
-        <%= link_to public_root_path do %>
-          <span class="text-xl font-bold text-gray-900">FetchSerp API</span>
-        <% end %>
-      </div>
-      <div class="flex items-center space-x-4">
-        <a href="#features" class="text-gray-600 hover:text-gray-900">Features</a>
-        <a href="#pricing" class="text-gray-600 hover:text-gray-900">Pricing</a>
-        <a href="/docs" class="text-gray-600 hover:text-gray-900">Docs</a>
-        <%= link_to "Get API Key", app_root_path, class: "inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700" %>
-      </div>
-    </nav>
-  </header>
+  <%= render "shared/navbar" %>
 
   <!-- Hero Section -->
   <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
@@ -108,16 +92,16 @@
       <div class="mt-8">
         <h3 class="text-xl font-semibold text-gray-900 mb-4">Endpoint Costs</h3>
         <ul class="space-y-3 text-gray-600">
-          <li class="flex justify-between"><span>Fetch Search Engine Results</span><span>1 credit</span></li>
-          <li class="flex justify-between"><span>Perform Hugging Face Inference</span><span>3 credits</span></li>
-          <li class="flex justify-between"><span>Scrape Web Page</span><span>1 credit</span></li>
-          <li class="flex justify-between"><span>Scrape Multiple Pages</span><span>1 credit</span></li>
-          <li class="flex justify-between"><span>Scrape Domain</span><span>2 credits</span></li>
-          <li class="flex justify-between"><span>Get domain from company</span><span>2 credits</span></li>
-          <li class="flex justify-between"><span>Get emails from a domain</span><span>2 credits</span></li>
-          <li class="flex justify-between"><span>Analyze Web Page</span><span>2 credits</span></li>
-          <li class="flex justify-between"><span>Analyze Search Engine Results</span><span>2 credits</span></li>
-          <li class="flex justify-between"><span>Get Hugging Face models list</span><span>0 credit</span></li>
+          <li class="flex justify-between"><span><a href="#serp_endpoint" data-endpoint="serp" class="open-accordion text-gray-400 hover:cursor-pointer hover:text-gray-600">Fetch Search Engine Results</a></span><span>1 credit</span></li>
+          <li class="flex justify-between"><span><a href="#hf_inference_endpoint" data-endpoint="hf_inference" class="open-accordion text-gray-400 hover:cursor-pointer hover:text-gray-600">Perform Hugging Face Inference</a></span><span>3 credits</span></li>
+          <li class="flex justify-between"><span><a href="#scrap_web_page_endpoint" data-endpoint="scrap_web_page" class="open-accordion text-gray-400 hover:cursor-pointer hover:text-gray-600">Scrape Web Page</a></span><span>1 credit</span></li>
+          <li class="flex justify-between"><span><a href="#scrap_web_pages_endpoint" data-endpoint="scrap_web_pages" class="open-accordion text-gray-400 hover:cursor-pointer hover:text-gray-600">Scrape Multiple Pages</a></span><span>1 credit</span></li>
+          <li class="flex justify-between"><span><a href="#scrap_domain_endpoint" data-endpoint="scrap_domain" class="open-accordion text-gray-400 hover:cursor-pointer hover:text-gray-600">Scrape Domain</a></span><span>2 credits</span></li>
+          <li class="flex justify-between"><span><a href="#get_domain_endpoint" data-endpoint="get_domain" class="open-accordion text-gray-400 hover:cursor-pointer hover:text-gray-600">Get domain from company</a></span><span>2 credits</span></li>
+          <li class="flex justify-between"><span><a href="#get_emails_endpoint" data-endpoint="get_emails" class="open-accordion text-gray-400 hover:cursor-pointer hover:text-gray-600">Get emails from a domain</a></span><span>2 credits</span></li>
+          <li class="flex justify-between"><span><a href="#analyze_web_page_endpoint" data-endpoint="analyze_web_page" class="open-accordion text-gray-400 hover:cursor-pointer hover:text-gray-600">Analyze Web Page</a></span><span>2 credits</span></li>
+          <li class="flex justify-between"><span><a href="#analyze_serp_endpoint" data-endpoint="analyze_serp" class="open-accordion text-gray-400 hover:cursor-pointer hover:text-gray-600">Analyze Search Engine Results</a></span><span>2 credits</span></li>
+          <li class="flex justify-between"><span><a href="#list_hf_models_endpoint" data-endpoint="list_hf_models" class="open-accordion text-gray-400 hover:cursor-pointer hover:text-gray-600">Get Hugging Face models list</a></span><span>0 credit</span></li>
         </ul>
       </div>
       <div class="mt-8 text-center">
@@ -127,11 +111,11 @@
   </section>
 
   <!-- API Endpoints Section -->
-  <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
+  <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20" id="endpoints">
     <h2 class="text-3xl font-bold text-center mb-12">API Endpoints</h2>
     <div class="space-y-4">
       <!-- Web Scraping Endpoint -->
-      <div class="bg-white rounded-lg shadow-md">
+      <div class="bg-white rounded-lg shadow-md" id="serp_endpoint">
         <button class="toggle-accordion w-full px-6 py-4 text-left focus:outline-none hover:cursor-pointer" data-endpoint="serp">
           <div class="flex items-center justify-between">
             <div class="flex items-center space-x-2">
@@ -143,7 +127,85 @@
         </button>
         <div id="serp" class="px-6 pb-4">
           <div class="prose max-w-none">
-            <p class="text-gray-600 mb-4">Fetch search engine results from Google, DuckDuckGo, Yahoo, Bing or Yandex.</p>
+            <div class="bg-gray-50 rounded-lg p-4 mb-8">
+              <p class="text-gray-600 mb-4">Fetch search engine results from multiple search engines including Google, DuckDuckGo, 
+                Yahoo, Bing, and Yandex. Get structured data with position rankings, titles, descriptions, 
+                and URLs.
+              </p>
+            </div>
+
+            <!-- Use Cases Section -->
+            <div class="mb-8">
+              <div class="flex items-center space-x-2 mb-4">
+                <svg class="h-5 w-5 text-indigo-600" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 7h-7a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h7a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2Z"/><path d="M16 13h.01"/><path d="M16 17h.01"/><path d="M10 7H3a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h7a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2Z"/><path d="M6 13h.01"/><path d="M6 17h.01"/></svg>
+                <h3 class="text-lg font-semibold text-gray-900">Use Cases</h3>
+              </div>
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div class="bg-gray-50 rounded-lg p-4">
+                  <h4 class="font-medium text-gray-900 mb-2">SEO Analysis</h4>
+                  <p class="text-sm text-gray-600">Track search rankings and monitor competitor visibility across multiple search engines.</p>
+                </div>
+                <div class="bg-gray-50 rounded-lg p-4">
+                  <h4 class="font-medium text-gray-900 mb-2">Market Research</h4>
+                  <p class="text-sm text-gray-600">Gather insights about product placement and brand visibility in search results.</p>
+                </div>
+                <div class="bg-gray-50 rounded-lg p-4">
+                  <h4 class="font-medium text-gray-900 mb-2">Content Strategy</h4>
+                  <p class="text-sm text-gray-600">Analyze top-ranking content to inform your content creation and optimization efforts.</p>
+                </div>
+                <div class="bg-gray-50 rounded-lg p-4">
+                  <h4 class="font-medium text-gray-900 mb-2">Competitive Analysis</h4>
+                  <p class="text-sm text-gray-600">Monitor competitor rankings and identify opportunities in search results.</p>
+                </div>
+              </div>
+            </div>
+
+            <!-- Target Audience Section -->
+            <div class="mb-8">
+              <div class="flex items-center space-x-2 mb-4">
+                <svg class="h-5 w-5 text-indigo-600" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg>
+                <h3 class="text-lg font-semibold text-gray-900">Who is it for?</h3>
+              </div>
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div class="bg-gray-50 rounded-lg p-4">
+                  <h4 class="font-medium text-gray-900 mb-2">Digital Marketers</h4>
+                  <p class="text-sm text-gray-600">Track campaign performance and optimize search visibility across multiple platforms.</p>
+                </div>
+                <div class="bg-gray-50 rounded-lg p-4">
+                  <h4 class="font-medium text-gray-900 mb-2">SEO Professionals</h4>
+                  <p class="text-sm text-gray-600">Monitor rankings and analyze search results for client websites.</p>
+                </div>
+                <div class="bg-gray-50 rounded-lg p-4">
+                  <h4 class="font-medium text-gray-900 mb-2">Content Creators</h4>
+                  <p class="text-sm text-gray-600">Research topics and analyze high-ranking content in their niche.</p>
+                </div>
+                <div class="bg-gray-50 rounded-lg p-4">
+                  <h4 class="font-medium text-gray-900 mb-2">Business Analysts</h4>
+                  <p class="text-sm text-gray-600">Gather market intelligence and track competitive positioning in search results.</p>
+                </div>
+              </div>
+            </div>
+
+            <!-- Parameters Section -->
+            <div class="bg-gray-50 rounded-lg p-4 mb-6">
+              <h3 class="text-lg font-semibold mb-3">Parameters</h3>
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div>
+                  <h4 class="font-medium text-gray-700">search_engine</h4>
+                  <p class="text-sm text-gray-600">
+                    google | duckduckgo | yahoo | bing | yandex
+                  </p>
+                </div>
+                <div>
+                  <h4 class="font-medium text-gray-700">pages_number</h4>
+                  <p class="text-sm text-gray-600">Number of pages to fetch</p>
+                </div>
+                <div>
+                  <h4 class="font-medium text-gray-700">query</h4>
+                  <p class="text-sm text-gray-600">Search query string</p>
+                </div>
+              </div>
+            </div>
             
             <!-- Language Tabs -->
             <div class="mb-4">
@@ -232,7 +294,7 @@ print(response.json())</code></pre>
         </div>
       </div>
 
-      <div class="bg-white rounded-lg shadow-md">
+      <div class="bg-white rounded-lg shadow-md" id="hf_inference_endpoint">
         <button class="toggle-accordion w-full px-6 py-4 text-left focus:outline-none hover:cursor-pointer" data-endpoint="hf_inference">
           <div class="flex items-center justify-between">
             <div class="flex items-center space-x-2">
@@ -244,7 +306,96 @@ print(response.json())</code></pre>
         </button>
         <div id="hf_inference" class="hidden px-6 pb-4">
           <div class="prose max-w-none">
-            <p class="text-gray-600 mb-4">Use any transformers model from Hugging Face.</p>
+            <!-- Endpoint Description -->
+            <div class="bg-gray-50 rounded-lg p-4 mb-8">
+              <p class="text-gray-600 mb-4">
+                Perform inference using any transformer model from Hugging Face. Get predictions for tasks like summarization, text generation, sentiment analysis, and more, with structured output from the model.
+              </p>
+            </div>
+
+            <!-- Use Cases Section -->
+            <div class="mb-8">
+              <div class="flex items-center space-x-2 mb-4">
+                <svg class="h-5 w-5 text-indigo-600" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M20 7h-7a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h7a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2Z"/>
+                  <path d="M16 13h.01"/>
+                  <path d="M16 17h.01"/>
+                  <path d="M10 7H3a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h7a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2Z"/>
+                  <path d="M6 13h.01"/>
+                  <path d="M6 17h.01"/>
+                </svg>
+                <h3 class="text-lg font-semibold text-gray-900">Use Cases</h3>
+              </div>
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div class="bg-gray-50 rounded-lg p-4">
+                  <h4 class="font-medium text-gray-900 mb-2">Text Summarization</h4>
+                  <p class="text-sm text-gray-600">Generate concise summaries of long documents or articles using state-of-the-art models.</p>
+                </div>
+                <div class="bg-gray-50 rounded-lg p-4">
+                  <h4 class="font-medium text-gray-900 mb-2">Sentiment Analysis</h4>
+                  <p class="text-sm text-gray-600">Analyze the sentiment of customer reviews or social media posts for insights.</p>
+                </div>
+                <div class="bg-gray-50 rounded-lg p-4">
+                  <h4 class="font-medium text-gray-900 mb-2">Text Generation</h4>
+                  <p class="text-sm text-gray-600">Create human-like text for content creation or chatbot responses.</p>
+                </div>
+                <div class="bg-gray-50 rounded-lg p-4">
+                  <h4 class="font-medium text-gray-900 mb-2">Question Answering</h4>
+                  <p class="text-sm text-gray-600">Extract answers from text based on user-provided questions.</p>
+                </div>
+              </div>
+            </div>
+
+            <!-- Target Audience Section -->
+            <div class="mb-8">
+              <div class="flex items-center space-x-2 mb-4">
+                <svg class="h-5 w-5 text-indigo-600" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <circle cx="12" cy="12" r="10"/>
+                  <circle cx="12" cy="12" r="6"/>
+                  <circle cx="12" cy="12" r="2"/>
+                </svg>
+                <h3 class="text-lg font-semibold text-gray-900">Who is it for?</h3>
+              </div>
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div class="bg-gray-50 rounded-lg p-4">
+                  <h4 class="font-medium text-gray-900 mb-2">Data Scientists</h4>
+                  <p class="text-sm text-gray-600">Run experiments with transformer models without managing infrastructure.</p>
+                </div>
+                <div class="bg-gray-50 rounded-lg p-4">
+                  <h4 class="font-medium text-gray-900 mb-2">Developers</h4>
+                  <p class="text-sm text-gray-600">Integrate advanced NLP capabilities into applications with ease.</p>
+                </div>
+                <div class="bg-gray-50 rounded-lg p-4">
+                  <h4 class="font-medium text-gray-900 mb-2">Content Creators</h4>
+                  <p class="text-sm text-gray-600">Automate content generation and summarization tasks for efficiency.</p>
+                </div>
+                <div class="bg-gray-50 rounded-lg p-4">
+                  <h4 class="font-medium text-gray-900 mb-2">Business Analysts</h4>
+                  <p class="text-sm text-gray-600">Extract insights from text data for decision-making and reporting.</p>
+                </div>
+              </div>
+            </div>
+
+            <!-- Parameters Section -->
+            <div class="bg-gray-50 rounded-lg p-4 mb-6">
+              <h3 class="text-lg font-semibold mb-3">Parameters</h3>
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div>
+                  <h4 class="font-medium text-gray-700">task</h4>
+                  <p class="text-sm text-gray-600">
+                    summarization | text-generation | sentiment-analysis | question-answering | etc.
+                  </p>
+                </div>
+                <div>
+                  <h4 class="font-medium text-gray-700">model</h4>
+                  <p class="text-sm text-gray-600">Hugging Face model name (e.g., sshleifer/distilbart-cnn-12-6)</p>
+                </div>
+                <div>
+                  <h4 class="font-medium text-gray-700">input</h4>
+                  <p class="text-sm text-gray-600">Input text for the model to process</p>
+                </div>
+              </div>
+            </div>
             
             <!-- Language Tabs -->
             <div class="mb-4">
@@ -364,7 +515,7 @@ print(response.json())</code></pre>
         </div>
       </div>
       
-      <div class="bg-white rounded-lg shadow-md">
+      <div class="bg-white rounded-lg shadow-md" id="scrap_web_page_endpoint">
         <button class="toggle-accordion w-full px-6 py-4 text-left focus:outline-none hover:cursor-pointer" data-endpoint="scrap_web_page">
           <div class="flex items-center justify-between">
             <div class="flex items-center space-x-2">
@@ -376,7 +527,90 @@ print(response.json())</code></pre>
         </button>
         <div id="scrap_web_page" class="hidden px-6 pb-4">
           <div class="prose max-w-none">
-            <p class="text-gray-600 mb-4">Run custom javascript code on any web page to extract content.</p>
+            <!-- Endpoint Description with Background -->
+            <div class="bg-gray-50 rounded-lg p-4 mb-6">
+              <p class="text-gray-600">
+                Run custom JavaScript code on any web page to extract content. Scrape data dynamically and return structured results tailored to your needs.
+              </p>
+            </div>
+
+            <!-- Use Cases Section -->
+            <div class="mb-8">
+              <div class="flex items-center space-x-2 mb-4">
+                <svg class="h-5 w-5 text-indigo-600" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M20 7h-7a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h7a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2Z"/>
+                  <path d="M16 13h.01"/>
+                  <path d="M16 17h.01"/>
+                  <path d="M10 7H3a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h7a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2Z"/>
+                  <path d="M6 13h.01"/>
+                  <path d="M6 17h.01"/>
+                </svg>
+                <h3 class="text-lg font-semibold text-gray-900">Use Cases</h3>
+              </div>
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div class="bg-gray-50 rounded-lg p-4">
+                  <h4 class="font-medium text-gray-900 mb-2">Data Extraction</h4>
+                  <p class="text-sm text-gray-600">Pull specific content like prices, reviews, or articles from websites for analysis.</p>
+                </div>
+                <div class="bg-gray-50 rounded-lg p-4">
+                  <h4 class="font-medium text-gray-900 mb-2">Competitor Monitoring</h4>
+                  <p class="text-sm text-gray-600">Scrape competitor websites to track updates, pricing, or product changes.</p>
+                </div>
+                <div class="bg-gray-50 rounded-lg p-4">
+                  <h4 class="font-medium text-gray-900 mb-2">Content Aggregation</h4>
+                  <p class="text-sm text-gray-600">Collect data from multiple sources to build curated content or databases.</p>
+                </div>
+                <div class="bg-gray-50 rounded-lg p-4">
+                  <h4 class="font-medium text-gray-900 mb-2">SEO Research</h4>
+                  <p class="text-sm text-gray-600">Extract metadata, keywords, or links from pages to analyze SEO strategies.</p>
+                </div>
+              </div>
+            </div>
+
+            <!-- Target Audience Section -->
+            <div class="mb-8">
+              <div class="flex items-center space-x-2 mb-4">
+                <svg class="h-5 w-5 text-indigo-600" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <circle cx="12" cy="12" r="10"/>
+                  <circle cx="12" cy="12" r="6"/>
+                  <circle cx="12" cy="12" r="2"/>
+                </svg>
+                <h3 class="text-lg font-semibold text-gray-900">Who is it for?</h3>
+              </div>
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div class="bg-gray-50 rounded-lg p-4">
+                  <h4 class="font-medium text-gray-900 mb-2">Developers</h4>
+                  <p class="text-sm text-gray-600">Build tools or apps that require dynamic web data without complex scraping setups.</p>
+                </div>
+                <div class="bg-gray-50 rounded-lg p-4">
+                  <h4 class="font-medium text-gray-900 mb-2">Marketers</h4>
+                  <p class="text-sm text-gray-600">Gather insights from competitor sites or industry trends for campaigns.</p>
+                </div>
+                <div class="bg-gray-50 rounded-lg p-4">
+                  <h4 class="font-medium text-gray-900 mb-2">Researchers</h4>
+                  <p class="text-sm text-gray-600">Collect data from web sources for studies or reports efficiently.</p>
+                </div>
+                <div class="bg-gray-50 rounded-lg p-4">
+                  <h4 class="font-medium text-gray-900 mb-2">Business Owners</h4>
+                  <p class="text-sm text-gray-600">Monitor market trends or competitor activity with custom data extraction.</p>
+                </div>
+              </div>
+            </div>
+
+            <!-- Parameters Section -->
+            <div class="bg-gray-50 rounded-lg p-4 mb-6">
+              <h3 class="text-lg font-semibold mb-3">Parameters</h3>
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div>
+                  <h4 class="font-medium text-gray-700">url</h4>
+                  <p class="text-sm text-gray-600">The web page URL to scrape (e.g., https://taboola.com)</p>
+                </div>
+                <div>
+                  <h4 class="font-medium text-gray-700">js_script</h4>
+                  <p class="text-sm text-gray-600">Custom JavaScript code to execute and return data (e.g., return { content: document.body.innerText })</p>
+                </div>
+              </div>
+            </div>
             
             <!-- Language Tabs -->
             <div class="mb-4">
@@ -489,7 +723,7 @@ print(response.json())</code></pre>
       </div>
 
 
-      <div class="bg-white rounded-lg shadow-md">
+      <div class="bg-white rounded-lg shadow-md" id="scrap_web_pages_endpoint">
         <button class="toggle-accordion w-full px-6 py-4 text-left focus:outline-none hover:cursor-pointer" data-endpoint="scrap_web_pages">
           <div class="flex items-center justify-between">
             <div class="flex items-center space-x-2">
@@ -501,7 +735,90 @@ print(response.json())</code></pre>
         </button>
         <div id="scrap_web_pages" class="hidden px-6 pb-4">
           <div class="prose max-w-none">
-            <p class="text-gray-600 mb-4">Run custom javascript code to extract content.</p>
+            <!-- Endpoint Description with Background -->
+            <div class="bg-gray-50 rounded-lg p-4 mb-6">
+              <p class="text-gray-600">
+                Run custom JavaScript code across multiple web pages to extract content. Scrape data dynamically from a list of URLs and return structured results tailored to your specifications.
+              </p>
+            </div>
+
+            <!-- Use Cases Section -->
+            <div class="mb-8">
+              <div class="flex items-center space-x-2 mb-4">
+                <svg class="h-5 w-5 text-indigo-600" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M20 7h-7a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h7a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2Z"/>
+                  <path d="M16 13h.01"/>
+                  <path d="M16 17h.01"/>
+                  <path d="M10 7H3a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h7a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2Z"/>
+                  <path d="M6 13h.01"/>
+                  <path d="M6 17h.01"/>
+                </svg>
+                <h3 class="text-lg font-semibold text-gray-900">Use Cases</h3>
+              </div>
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div class="bg-gray-50 rounded-lg p-4">
+                  <h4 class="font-medium text-gray-900 mb-2">Bulk Data Collection</h4>
+                  <p class="text-sm text-gray-600">Extract data like product details or news articles from multiple websites at once.</p>
+                </div>
+                <div class="bg-gray-50 rounded-lg p-4">
+                  <h4 class="font-medium text-gray-900 mb-2">Competitor Benchmarking</h4>
+                  <p class="text-sm text-gray-600">Scrape multiple competitor sites to compare pricing, features, or updates.</p>
+                </div>
+                <div class="bg-gray-50 rounded-lg p-4">
+                  <h4 class="font-medium text-gray-900 mb-2">Market Research</h4>
+                  <p class="text-sm text-gray-600">Gather insights from various sources to analyze trends or consumer behavior.</p>
+                </div>
+                <div class="bg-gray-50 rounded-lg p-4">
+                  <h4 class="font-medium text-gray-900 mb-2">SEO Audits</h4>
+                  <p class="text-sm text-gray-600">Collect metadata or content from multiple pages to evaluate SEO performance.</p>
+                </div>
+              </div>
+            </div>
+
+            <!-- Target Audience Section -->
+            <div class="mb-8">
+              <div class="flex items-center space-x-2 mb-4">
+                <svg class="h-5 w-5 text-indigo-600" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <circle cx="12" cy="12" r="10"/>
+                  <circle cx="12" cy="12" r="6"/>
+                  <circle cx="12" cy="12" r="2"/>
+                </svg>
+                <h3 class="text-lg font-semibold text-gray-900">Who is it for?</h3>
+              </div>
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div class="bg-gray-50 rounded-lg p-4">
+                  <h4 class="font-medium text-gray-900 mb-2">Data Analysts</h4>
+                  <p class="text-sm text-gray-600">Compile large datasets from multiple web sources for analysis.</p>
+                </div>
+                <div class="bg-gray-50 rounded-lg p-4">
+                  <h4 class="font-medium text-gray-900 mb-2">Developers</h4>
+                  <p class="text-sm text-gray-600">Automate data extraction across multiple pages for app development.</p>
+                </div>
+                <div class="bg-gray-50 rounded-lg p-4">
+                  <h4 class="font-medium text-gray-900 mb-2">Marketers</h4>
+                  <p class="text-sm text-gray-600">Monitor industry trends or competitors across multiple websites.</p>
+                </div>
+                <div class="bg-gray-50 rounded-lg p-4">
+                  <h4 class="font-medium text-gray-900 mb-2">E-commerce Managers</h4>
+                  <p class="text-sm text-gray-600">Track product pricing or availability from various online stores.</p>
+                </div>
+              </div>
+            </div>
+
+            <!-- Parameters Section -->
+            <div class="bg-gray-50 rounded-lg p-4 mb-6">
+              <h3 class="text-lg font-semibold mb-3">Parameters</h3>
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div>
+                  <h4 class="font-medium text-gray-700">urls</h4>
+                  <p class="text-sm text-gray-600">Array of web page URLs to scrape (e.g., ["https://taboola.com", "https://google.com"])</p>
+                </div>
+                <div>
+                  <h4 class="font-medium text-gray-700">js_script</h4>
+                  <p class="text-sm text-gray-600">Custom JavaScript code to execute and return data (e.g., return { url: document.location.href, content: document.body.innerText })</p>
+                </div>
+              </div>
+            </div>
             
             <!-- Language Tabs -->
             <div class="mb-4">
@@ -622,7 +939,7 @@ print(response.json())</code></pre>
       </div>
 
 
-      <div class="bg-white rounded-lg shadow-md">
+      <div class="bg-white rounded-lg shadow-md" id="scrap_domain_endpoint">
         <button class="toggle-accordion w-full px-6 py-4 text-left focus:outline-none hover:cursor-pointer" data-endpoint="scrap_domain">
           <div class="flex items-center justify-between">
             <div class="flex items-center space-x-2">
@@ -634,7 +951,90 @@ print(response.json())</code></pre>
         </button>
         <div id="scrap_domain" class="hidden px-6 pb-4">
           <div class="prose max-w-none">
-            <p class="text-gray-600 mb-4">Scrap domain web pages.</p>
+            <!-- Endpoint Description with Background -->
+            <div class="bg-gray-50 rounded-lg p-4 mb-6">
+              <p class="text-gray-600">
+                Scrape all accessible web pages within a specified domain using custom JavaScript code. Extract and return structured content from multiple pages across the domain efficiently.
+              </p>
+            </div>
+
+            <!-- Use Cases Section -->
+            <div class="mb-8">
+              <div class="flex items-center space-x-2 mb-4">
+                <svg class="h-5 w-5 text-indigo-600" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M20 7h-7a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h7a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2Z"/>
+                  <path d="M16 13h.01"/>
+                  <path d="M16 17h.01"/>
+                  <path d="M10 7H3a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h7a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2Z"/>
+                  <path d="M6 13h.01"/>
+                  <path d="M6 17h.01"/>
+                </svg>
+                <h3 class="text-lg font-semibold text-gray-900">Use Cases</h3>
+              </div>
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div class="bg-gray-50 rounded-lg p-4">
+                  <h4 class="font-medium text-gray-900 mb-2">Website Auditing</h4>
+                  <p class="text-sm text-gray-600">Extract content from all pages of a domain to audit structure, content, or SEO elements.</p>
+                </div>
+                <div class="bg-gray-50 rounded-lg p-4">
+                  <h4 class="font-medium text-gray-900 mb-2">Competitor Analysis</h4>
+                  <p class="text-sm text-gray-600">Scrape an entire competitor domain to analyze product listings, pricing, or updates.</p>
+                </div>
+                <div class="bg-gray-50 rounded-lg p-4">
+                  <h4 class="font-medium text-gray-900 mb-2">Content Migration</h4>
+                  <p class="text-sm text-gray-600">Collect data from all pages of a domain for website migration or archival purposes.</p>
+                </div>
+                <div class="bg-gray-50 rounded-lg p-4">
+                  <h4 class="font-medium text-gray-900 mb-2">Market Intelligence</h4>
+                  <p class="text-sm text-gray-600">Gather comprehensive data from a domain to study market positioning or offerings.</p>
+                </div>
+              </div>
+            </div>
+
+            <!-- Target Audience Section -->
+            <div class="mb-8">
+              <div class="flex items-center space-x-2 mb-4">
+                <svg class="h-5 w-5 text-indigo-600" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <circle cx="12" cy="12" r="10"/>
+                  <circle cx="12" cy="12" r="6"/>
+                  <circle cx="12" cy="12" r="2"/>
+                </svg>
+                <h3 class="text-lg font-semibold text-gray-900">Who is it for?</h3>
+              </div>
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div class="bg-gray-50 rounded-lg p-4">
+                  <h4 class="font-medium text-gray-900 mb-2">SEO Specialists</h4>
+                  <p class="text-sm text-gray-600">Analyze an entire domain’s content and structure for optimization insights.</p>
+                </div>
+                <div class="bg-gray-50 rounded-lg p-4">
+                  <h4 class="font-medium text-gray-900 mb-2">Web Developers</h4>
+                  <p class="text-sm text-gray-600">Extract data from a domain for rebuilding, testing, or integration projects.</p>
+                </div>
+                <div class="bg-gray-50 rounded-lg p-4">
+                  <h4 class="font-medium text-gray-900 mb-2">Business Analysts</h4>
+                  <p class="text-sm text-gray-600">Study a competitor’s domain-wide data for strategic planning.</p>
+                </div>
+                <div class="bg-gray-50 rounded-lg p-4">
+                  <h4 class="font-medium text-gray-900 mb-2">Content Managers</h4>
+                  <p class="text-sm text-gray-600">Scrape a domain to manage or repurpose content across multiple pages.</p>
+                </div>
+              </div>
+            </div>
+
+            <!-- Parameters Section -->
+            <div class="bg-gray-50 rounded-lg p-4 mb-6">
+              <h3 class="text-lg font-semibold mb-3">Parameters</h3>
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div>
+                  <h4 class="font-medium text-gray-700">domain</h4>
+                  <p class="text-sm text-gray-600">The domain to scrape (e.g., skuuudle.com)</p>
+                </div>
+                <div>
+                  <h4 class="font-medium text-gray-700">js_script</h4>
+                  <p class="text-sm text-gray-600">Custom JavaScript code to execute and return data (e.g., return { url: document.location.href, content: document.body.innerText })</p>
+                </div>
+              </div>
+            </div>
             
             <!-- Language Tabs -->
             <div class="mb-4">
@@ -760,7 +1160,7 @@ print(json.dumps(response.json(), indent=2))</code></pre>
       </div>
 
 
-      <div class="bg-white rounded-lg shadow-md">
+      <div class="bg-white rounded-lg shadow-md" id="get_domain_endpoint">
         <button class="toggle-accordion w-full px-6 py-4 text-left focus:outline-none hover:cursor-pointer" data-endpoint="get_domain">
           <div class="flex items-center justify-between">
             <div class="flex items-center space-x-2">
@@ -772,7 +1172,86 @@ print(json.dumps(response.json(), indent=2))</code></pre>
         </button>
         <div id="get_domain" class="hidden px-6 pb-4">
           <div class="prose max-w-none">
-            <p class="text-gray-600 mb-4">Retrieve company domain.</p>
+            <!-- Endpoint Description with Background -->
+            <div class="bg-gray-50 rounded-lg p-4 mb-6">
+              <p class="text-gray-600">
+                Retrieve the primary domain associated with a company name. Quickly identify a company’s official website URL based on its name for further analysis or integration.
+              </p>
+            </div>
+
+            <!-- Use Cases Section -->
+            <div class="mb-8">
+              <div class="flex items-center space-x-2 mb-4">
+                <svg class="h-5 w-5 text-indigo-600" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M20 7h-7a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h7a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2Z"/>
+                  <path d="M16 13h.01"/>
+                  <path d="M16 17h.01"/>
+                  <path d="M10 7H3a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h7a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2Z"/>
+                  <path d="M6 13h.01"/>
+                  <path d="M6 17h.01"/>
+                </svg>
+                <h3 class="text-lg font-semibold text-gray-900">Use Cases</h3>
+              </div>
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div class="bg-gray-50 rounded-lg p-4">
+                  <h4 class="font-medium text-gray-900 mb-2">Lead Generation</h4>
+                  <p class="text-sm text-gray-600">Find company websites to build contact lists or verify business details.</p>
+                </div>
+                <div class="bg-gray-50 rounded-lg p-4">
+                  <h4 class="font-medium text-gray-900 mb-2">Competitor Research</h4>
+                  <p class="text-sm text-gray-600">Identify competitor domains for analysis or benchmarking.</p>
+                </div>
+                <div class="bg-gray-50 rounded-lg p-4">
+                  <h4 class="font-medium text-gray-900 mb-2">Data Enrichment</h4>
+                  <p class="text-sm text-gray-600">Enhance CRM or database records with accurate company domains.</p>
+                </div>
+                <div class="bg-gray-50 rounded-lg p-4">
+                  <h4 class="font-medium text-gray-900 mb-2">Marketing Outreach</h4>
+                  <p class="text-sm text-gray-600">Locate company websites for targeted email or advertising campaigns.</p>
+                </div>
+              </div>
+            </div>
+
+            <!-- Target Audience Section -->
+            <div class="mb-8">
+              <div class="flex items-center space-x-2 mb-4">
+                <svg class="h-5 w-5 text-indigo-600" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <circle cx="12" cy="12" r="10"/>
+                  <circle cx="12" cy="12" r="6"/>
+                  <circle cx="12" cy="12" r="2"/>
+                </svg>
+                <h3 class="text-lg font-semibold text-gray-900">Who is it for?</h3>
+              </div>
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div class="bg-gray-50 rounded-lg p-4">
+                  <h4 class="font-medium text-gray-900 mb-2">Sales Teams</h4>
+                  <p class="text-sm text-gray-600">Identify company domains for prospecting and outreach efforts.</p>
+                </div>
+                <div class="bg-gray-50 rounded-lg p-4">
+                  <h4 class="font-medium text-gray-900 mb-2">Marketers</h4>
+                  <p class="text-sm text-gray-600">Locate domains for campaign targeting or competitive analysis.</p>
+                </div>
+                <div class="bg-gray-50 rounded-lg p-4">
+                  <h4 class="font-medium text-gray-900 mb-2">Data Analysts</h4>
+                  <p class="text-sm text-gray-600">Enrich datasets with company domain information for reporting.</p>
+                </div>
+                <div class="bg-gray-50 rounded-lg p-4">
+                  <h4 class="font-medium text-gray-900 mb-2">Developers</h4>
+                  <p class="text-sm text-gray-600">Integrate domain lookup into tools or workflows for automation.</p>
+                </div>
+              </div>
+            </div>
+
+            <!-- Parameters Section -->
+            <div class="bg-gray-50 rounded-lg p-4 mb-6">
+              <h3 class="text-lg font-semibold mb-3">Parameters</h3>
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div>
+                  <h4 class="font-medium text-gray-700">company</h4>
+                  <p class="text-sm text-gray-600">The name of the company to retrieve the domain for (e.g., taboola)</p>
+                </div>
+              </div>
+            </div>
             
             <!-- Language Tabs -->
             <div class="mb-4">
@@ -860,7 +1339,7 @@ print(json.dumps(response.json(), indent=2))</code></pre>
       </div>
 
 
-      <div class="bg-white rounded-lg shadow-md">
+      <div class="bg-white rounded-lg shadow-md" id="get_emails_endpoint">
         <button class="toggle-accordion w-full px-6 py-4 text-left focus:outline-none hover:cursor-pointer" data-endpoint="get_emails">
           <div class="flex items-center justify-between">
             <div class="flex items-center space-x-2">
@@ -872,7 +1351,86 @@ print(json.dumps(response.json(), indent=2))</code></pre>
         </button>
         <div id="get_emails" class="hidden px-6 pb-4">
           <div class="prose max-w-none">
-            <p class="text-gray-600 mb-4">Retrieve emails from domain name.</p>
+            <!-- Endpoint Description with Background -->
+            <div class="bg-gray-50 rounded-lg p-4 mb-6">
+              <p class="text-gray-600">
+                Retrieve a list of email addresses associated with a given domain. Extract contact information from a company’s website for outreach, research, or data enrichment purposes.
+              </p>
+            </div>
+
+            <!-- Use Cases Section -->
+            <div class="mb-8">
+              <div class="flex items-center space-x-2 mb-4">
+                <svg class="h-5 w-5 text-indigo-600" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M20 7h-7a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h7a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2Z"/>
+                  <path d="M16 13h.01"/>
+                  <path d="M16 17h.01"/>
+                  <path d="M10 7H3a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h7a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2Z"/>
+                  <path d="M6 13h.01"/>
+                  <path d="M6 17h.01"/>
+                </svg>
+                <h3 class="text-lg font-semibold text-gray-900">Use Cases</h3>
+              </div>
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div class="bg-gray-50 rounded-lg p-4">
+                  <h4 class="font-medium text-gray-900 mb-2">Lead Generation</h4>
+                  <p class="text-sm text-gray-600">Collect email addresses from a domain for sales prospecting or outreach.</p>
+                </div>
+                <div class="bg-gray-50 rounded-lg p-4">
+                  <h4 class="font-medium text-gray-900 mb-2">Customer Support</h4>
+                  <p class="text-sm text-gray-600">Find support or contact emails for troubleshooting or inquiries.</p>
+                </div>
+                <div class="bg-gray-50 rounded-lg p-4">
+                  <h4 class="font-medium text-gray-900 mb-2">Data Enrichment</h4>
+                  <p class="text-sm text-gray-600">Enhance CRM records with email contacts from company domains.</p>
+                </div>
+                <div class="bg-gray-50 rounded-lg p-4">
+                  <h4 class="font-medium text-gray-900 mb-2">Competitor Analysis</h4>
+                  <p class="text-sm text-gray-600">Identify key contacts within a competitor’s domain for strategic insights.</p>
+                </div>
+              </div>
+            </div>
+
+            <!-- Target Audience Section -->
+            <div class="mb-8">
+              <div class="flex items-center space-x-2 mb-4">
+                <svg class="h-5 w-5 text-indigo-600" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <circle cx="12" cy="12" r="10"/>
+                  <circle cx="12" cy="12" r="6"/>
+                  <circle cx="12" cy="12" r="2"/>
+                </svg>
+                <h3 class="text-lg font-semibold text-gray-900">Who is it for?</h3>
+              </div>
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div class="bg-gray-50 rounded-lg p-4">
+                  <h4 class="font-medium text-gray-900 mb-2">Sales Teams</h4>
+                  <p class="text-sm text-gray-600">Gather email contacts for lead nurturing and relationship building.</p>
+                </div>
+                <div class="bg-gray-50 rounded-lg p-4">
+                  <h4 class="font-medium text-gray-900 mb-2">Marketers</h4>
+                  <p class="text-sm text-gray-600">Find emails for targeted campaigns or partnership opportunities.</p>
+                </div>
+                <div class="bg-gray-50 rounded-lg p-4">
+                  <h4 class="font-medium text-gray-900 mb-2">Recruiters</h4>
+                  <p class="text-sm text-gray-600">Locate HR or hiring manager emails for job candidate outreach.</p>
+                </div>
+                <div class="bg-gray-50 rounded-lg p-4">
+                  <h4 class="font-medium text-gray-900 mb-2">Researchers</h4>
+                  <p class="text-sm text-gray-600">Collect email data for studies or competitive intelligence.</p>
+                </div>
+              </div>
+            </div>
+
+            <!-- Parameters Section -->
+            <div class="bg-gray-50 rounded-lg p-4 mb-6">
+              <h3 class="text-lg font-semibold mb-3">Parameters</h3>
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div>
+                  <h4 class="font-medium text-gray-700">domain</h4>
+                  <p class="text-sm text-gray-600">The domain name to retrieve emails from (e.g., taboola.com)</p>
+                </div>
+              </div>
+            </div>
             
             <!-- Language Tabs -->
             <div class="mb-4">
@@ -967,7 +1525,7 @@ print(json.dumps(response.json(), indent=2))</code></pre>
       </div>
 
 
-      <div class="bg-white rounded-lg shadow-md">
+      <div class="bg-white rounded-lg shadow-md" id="analyze_web_page_endpoint">
         <button class="toggle-accordion w-full px-6 py-4 text-left focus:outline-none hover:cursor-pointer" data-endpoint="analyze_web_page">
           <div class="flex items-center justify-between">
             <div class="flex items-center space-x-2">
@@ -979,7 +1537,90 @@ print(json.dumps(response.json(), indent=2))</code></pre>
         </button>
         <div id="analyze_web_page" class="hidden px-6 pb-4">
           <div class="prose max-w-none">
-            <p class="text-gray-600 mb-4">Analyze web content using custom prompt.</p>
+            <!-- Endpoint Description with Background -->
+            <div class="bg-gray-50 rounded-lg p-4 mb-6">
+              <p class="text-gray-600">
+                Analyze the content of a web page using a custom prompt. Extract insights, summaries, or specific information from the page based on your tailored query.
+              </p>
+            </div>
+
+            <!-- Use Cases Section -->
+            <div class="mb-8">
+              <div class="flex items-center space-x-2 mb-4">
+                <svg class="h-5 w-5 text-indigo-600" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M20 7h-7a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h7a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2Z"/>
+                  <path d="M16 13h.01"/>
+                  <path d="M16 17h.01"/>
+                  <path d="M10 7H3a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h7a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2Z"/>
+                  <path d="M6 13h.01"/>
+                  <path d="M6 17h.01"/>
+                </svg>
+                <h3 class="text-lg font-semibold text-gray-900">Use Cases</h3>
+              </div>
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div class="bg-gray-50 rounded-lg p-4">
+                  <h4 class="font-medium text-gray-900 mb-2">Content Summarization</h4>
+                  <p class="text-sm text-gray-600">Generate concise summaries of web pages for quick insights.</p>
+                </div>
+                <div class="bg-gray-50 rounded-lg p-4">
+                  <h4 class="font-medium text-gray-900 mb-2">Competitor Analysis</h4>
+                  <p class="text-sm text-gray-600">Extract specific details like products or services from competitor sites.</p>
+                </div>
+                <div class="bg-gray-50 rounded-lg p-4">
+                  <h4 class="font-medium text-gray-900 mb-2">SEO Evaluation</h4>
+                  <p class="text-sm text-gray-600">Analyze page content to assess keywords, structure, or intent.</p>
+                </div>
+                <div class="bg-gray-50 rounded-lg p-4">
+                  <h4 class="font-medium text-gray-900 mb-2">Market Research</h4>
+                  <p class="text-sm text-gray-600">Identify trends, offerings, or strategies from industry websites.</p>
+                </div>
+              </div>
+            </div>
+
+            <!-- Target Audience Section -->
+            <div class="mb-8">
+              <div class="flex items-center space-x-2 mb-4">
+                <svg class="h-5 w-5 text-indigo-600" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <circle cx="12" cy="12" r="10"/>
+                  <circle cx="12" cy="12" r="6"/>
+                  <circle cx="12" cy="12" r="2"/>
+                </svg>
+                <h3 class="text-lg font-semibold text-gray-900">Who is it for?</h3>
+              </div>
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div class="bg-gray-50 rounded-lg p-4">
+                  <h4 class="font-medium text-gray-900 mb-2">Content Creators</h4>
+                  <p class="text-sm text-gray-600">Summarize or analyze web content for articles or reports.</p>
+                </div>
+                <div class="bg-gray-50 rounded-lg p-4">
+                  <h4 class="font-medium text-gray-900 mb-2">Marketers</h4>
+                  <p class="text-sm text-gray-600">Evaluate competitor strategies or page effectiveness.</p>
+                </div>
+                <div class="bg-gray-50 rounded-lg p-4">
+                  <h4 class="font-medium text-gray-900 mb-2">SEO Specialists</h4>
+                  <p class="text-sm text-gray-600">Assess web pages for optimization opportunities.</p>
+                </div>
+                <div class="bg-gray-50 rounded-lg p-4">
+                  <h4 class="font-medium text-gray-900 mb-2">Business Analysts</h4>
+                  <p class="text-sm text-gray-600">Extract actionable insights from industry or competitor sites.</p>
+                </div>
+              </div>
+            </div>
+
+            <!-- Parameters Section -->
+            <div class="bg-gray-50 rounded-lg p-4 mb-6">
+              <h3 class="text-lg font-semibold mb-3">Parameters</h3>
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div>
+                  <h4 class="font-medium text-gray-700">url</h4>
+                  <p class="text-sm text-gray-600">The web page URL to analyze (e.g., https://taboola.com)</p>
+                </div>
+                <div>
+                  <h4 class="font-medium text-gray-700">prompt</h4>
+                  <p class="text-sm text-gray-600">Custom prompt to guide the analysis (e.g., "What are the products or services offered by Taboola?")</p>
+                </div>
+              </div>
+            </div>
             
             <!-- Language Tabs -->
             <div class="mb-4">
@@ -1082,7 +1723,7 @@ print(json.dumps(response.json(), indent=2))</code></pre>
             <pre><code class="language-json">{
   "response": {
     "data": {
-      "analysis_output": "The content provided does not contain any specific company information. It focuses on various marketing strategies, campaigns, and performance ad units but lacks detailed company data, structure, products, or market position information."
+      "analysis_output": "The Taboola platform offers a wide range of services aimed at helping businesses grow and succeed online. Key features include targeted advertising, audience targeting, performance metrics tracking, and tools for optimizing the digital marketing funnel. The platform provides detailed information on how to use its various products effectively, such as 1st Party Audience Targeting Solutions, which allow publishers to connect with specific audiences based on their needs. Additionally, Taboola offers insights into conversion rates, cost-per-action (COPA) metrics, and other performance indicators that help businesses understand the effectiveness of their campaigns. The platform also includes tools for analyzing customer behavior, such as headline analyzer tools, which provide detailed insights into customer engagement with brand messaging. These features enable businesses to make data-driven decisions to improve their marketing strategies and ultimately drive business growth."
     }
   }
 }</code></pre>
@@ -1091,7 +1732,7 @@ print(json.dumps(response.json(), indent=2))</code></pre>
       </div>
 
 
-      <div class="bg-white rounded-lg shadow-md">
+      <div class="bg-white rounded-lg shadow-md" id="analyze_serp_endpoint">
         <button class="toggle-accordion w-full px-6 py-4 text-left focus:outline-none hover:cursor-pointer" data-endpoint="analyze_serp">
           <div class="flex items-center justify-between">
             <div class="flex items-center space-x-2">
@@ -1103,7 +1744,98 @@ print(json.dumps(response.json(), indent=2))</code></pre>
         </button>
         <div id="analyze_serp" class="hidden px-6 pb-4">
           <div class="prose max-w-none">
-            <p class="text-gray-600 mb-4">Analyze search engine results using a custom prompt.</p>
+            <!-- Endpoint Description with Background -->
+            <div class="bg-gray-50 rounded-lg p-4 mb-6">
+              <p class="text-gray-600">
+                Analyze search engine results pages (SERPs) for a given query using a custom prompt. Extract and interpret data from multiple result pages across a specified search engine.
+              </p>
+            </div>
+
+            <!-- Use Cases Section -->
+            <div class="mb-8">
+              <div class="flex items-center space-x-2 mb-4">
+                <svg class="h-5 w-5 text-indigo-600" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M20 7h-7a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h7a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2Z"/>
+                  <path d="M16 13h.01"/>
+                  <path d="M16 17h.01"/>
+                  <path d="M10 7H3a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h7a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2Z"/>
+                  <path d="M6 13h.01"/>
+                  <path d="M6 17h.01"/>
+                </svg>
+                <h3 class="text-lg font-semibold text-gray-900">Use Cases</h3>
+              </div>
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div class="bg-gray-50 rounded-lg p-4">
+                  <h4 class="font-medium text-gray-900 mb-2">SEO Research</h4>
+                  <p class="text-sm text-gray-600">Analyze SERPs to understand ranking factors or keyword performance.</p>
+                </div>
+                <div class="bg-gray-50 rounded-lg p-4">
+                  <h4 class="font-medium text-gray-900 mb-2">Competitor Monitoring</h4>
+                  <p class="text-sm text-gray-600">Extract insights about competitors’ visibility in search results.</p>
+                </div>
+                <div class="bg-gray-50 rounded-lg p-4">
+                  <h4 class="font-medium text-gray-900 mb-2">Market Trends</h4>
+                  <p class="text-sm text-gray-600">Identify trends or popular topics based on search result content.</p>
+                </div>
+                <div class="bg-gray-50 rounded-lg p-4">
+                  <h4 class="font-medium text-gray-900 mb-2">Content Strategy</h4>
+                  <p class="text-sm text-gray-600">Evaluate top-ranking pages to inform content creation or optimization.</p>
+                </div>
+              </div>
+            </div>
+
+            <!-- Target Audience Section -->
+            <div class="mb-8">
+              <div class="flex items-center space-x-2 mb-4">
+                <svg class="h-5 w-5 text-indigo-600" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <circle cx="12" cy="12" r="10"/>
+                  <circle cx="12" cy="12" r="6"/>
+                  <circle cx="12" cy="12" r="2"/>
+                </svg>
+                <h3 class="text-lg font-semibold text-gray-900">Who is it for?</h3>
+              </div>
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div class="bg-gray-50 rounded-lg p-4">
+                  <h4 class="font-medium text-gray-900 mb-2">SEO Specialists</h4>
+                  <p class="text-sm text-gray-600">Analyze SERPs to optimize websites for better rankings.</p>
+                </div>
+                <div class="bg-gray-50 rounded-lg p-4">
+                  <h4 class="font-medium text-gray-900 mb-2">Marketers</h4>
+                  <p class="text-sm text-gray-600">Study search results for campaign planning or competitor insights.</p>
+                </div>
+                <div class="bg-gray-50 rounded-lg p-4">
+                  <h4 class="font-medium text-gray-900 mb-2">Content Creators</h4>
+                  <p class="text-sm text-gray-600">Use SERP data to craft relevant and high-ranking content.</p>
+                </div>
+                <div class="bg-gray-50 rounded-lg p-4">
+                  <h4 class="font-medium text-gray-900 mb-2">Business Analysts</h4>
+                  <p class="text-sm text-gray-600">Extract market insights from search engine results.</p>
+                </div>
+              </div>
+            </div>
+
+            <!-- Parameters Section -->
+            <div class="bg-gray-50 rounded-lg p-4 mb-6">
+              <h3 class="text-lg font-semibold mb-3">Parameters</h3>
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div>
+                  <h4 class="font-medium text-gray-700">query</h4>
+                  <p class="text-sm text-gray-600">The search query to analyze (e.g., "Capital of France")</p>
+                </div>
+                <div>
+                  <h4 class="font-medium text-gray-700">prompt</h4>
+                  <p class="text-sm text-gray-600">Custom prompt to guide the analysis (e.g., "What is the capital of France?")</p>
+                </div>
+                <div>
+                  <h4 class="font-medium text-gray-700">search_engine</h4>
+                  <p class="text-sm text-gray-600">The search engine to use (e.g., "duckduckgo")</p>
+                </div>
+                <div>
+                  <h4 class="font-medium text-gray-700">pages_number</h4>
+                  <p class="text-sm text-gray-600">Number of SERP pages to analyze (e.g., 3)</p>
+                </div>
+              </div>
+            </div>
             
             <!-- Language Tabs -->
             <div class="mb-4">
@@ -1214,7 +1946,7 @@ print(json.dumps(response.json(), indent=2))</code></pre>
             <pre><code class="language-json">{
   "response": {
     "data": {
-      "analysis_output": "The task is to extract and analyze company information from web content provided. The guidelines specify that factual information should be extracted without assumptions or inferences, and precise data should be returned in JSON format. The response must include the following elements: (1) A JSON object with keys"
+      "analysis_output": "Paris is the capital city of France. It has a rich history and cultural significance as the political, economic, and cultural center of the country since the 9th century. The city's historical sites include landmarks such as the Eiffel Tower, Notre-Dame Cathedral, and the Louvre Museum. Paris is also known for its vibrant arts scene, fashion industry, and global influence in various fields including film, cuisine, and architecture."
     }
   }
 }</code></pre>
@@ -1223,7 +1955,7 @@ print(json.dumps(response.json(), indent=2))</code></pre>
       </div>
 
 
-      <div class="bg-white rounded-lg shadow-md">
+      <div class="bg-white rounded-lg shadow-md" id="list_hf_models_endpoint">
         <button class="toggle-accordion w-full px-6 py-4 text-left focus:outline-none hover:cursor-pointer" data-endpoint="list_hf_models">
           <div class="flex items-center justify-between">
             <div class="flex items-center space-x-2">
@@ -1235,7 +1967,90 @@ print(json.dumps(response.json(), indent=2))</code></pre>
         </button>
         <div id="list_hf_models" class="hidden px-6 pb-4">
           <div class="prose max-w-none">
-            <p class="text-gray-600 mb-4">List Hugging Face Models by task.</p>
+            <!-- Endpoint Description with Background -->
+            <div class="bg-gray-50 rounded-lg p-4 mb-6">
+              <p class="text-gray-600">
+                Retrieve a list of Hugging Face models available for a specific task. Identify and explore machine learning models tailored to your use case from the Hugging Face ecosystem.
+              </p>
+            </div>
+
+            <!-- Use Cases Section -->
+            <div class="mb-8">
+              <div class="flex items-center space-x-2 mb-4">
+                <svg class="h-5 w-5 text-indigo-600" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M20 7h-7a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h7a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2Z"/>
+                  <path d="M16 13h.01"/>
+                  <path d="M16 17h.01"/>
+                  <path d="M10 7H3a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h7a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2Z"/>
+                  <path d="M6 13h.01"/>
+                  <path d="M6 17h.01"/>
+                </svg>
+                <h3 class="text-lg font-semibold text-gray-900">Use Cases</h3>
+              </div>
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div class="bg-gray-50 rounded-lg p-4">
+                  <h4 class="font-medium text-gray-900 mb-2">Model Selection</h4>
+                  <p class="text-sm text-gray-600">Find the best Hugging Face models for tasks like summarization or translation.</p>
+                </div>
+                <div class="bg-gray-50 rounded-lg p-4">
+                  <h4 class="font-medium text-gray-900 mb-2">AI Development</h4>
+                  <p class="text-sm text-gray-600">Identify models to integrate into AI-driven applications or workflows.</p>
+                </div>
+                <div class="bg-gray-50 rounded-lg p-4">
+                  <h4 class="font-medium text-gray-900 mb-2">Research Exploration</h4>
+                  <p class="text-sm text-gray-600">Discover state-of-the-art models for academic or experimental projects.</p>
+                </div>
+                <div class="bg-gray-50 rounded-lg p-4">
+                  <h4 class="font-medium text-gray-900 mb-2">Tool Benchmarking</h4>
+                  <p class="text-sm text-gray-600">Compare available models for performance evaluation on specific tasks.</p>
+                </div>
+              </div>
+            </div>
+
+            <!-- Target Audience Section -->
+            <div class="mb-8">
+              <div class="flex items-center space-x-2 mb-4">
+                <svg class="h-5 w-5 text-indigo-600" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <circle cx="12" cy="12" r="10"/>
+                  <circle cx="12" cy="12" r="6"/>
+                  <circle cx="12" cy="12" r="2"/>
+                </svg>
+                <h3 class="text-lg font-semibold text-gray-900">Who is it for?</h3>
+              </div>
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div class="bg-gray-50 rounded-lg p-4">
+                  <h4 class="font-medium text-gray-900 mb-2">Developers</h4>
+                  <p class="text-sm text-gray-600">Access models for building NLP or machine learning solutions.</p>
+                </div>
+                <div class="bg-gray-50 rounded-lg p-4">
+                  <h4 class="font-medium text-gray-900 mb-2">Data Scientists</h4>
+                  <p class="text-sm text-gray-600">Explore and select models for data analysis or predictive tasks.</p>
+                </div>
+                <div class="bg-gray-50 rounded-lg p-4">
+                  <h4 class="font-medium text-gray-900 mb-2">Researchers</h4>
+                  <p class="text-sm text-gray-600">Identify cutting-edge models for AI research and experimentation.</p>
+                </div>
+                <div class="bg-gray-50 rounded-lg p-4">
+                  <h4 class="font-medium text-gray-900 mb-2">Product Managers</h4>
+                  <p class="text-sm text-gray-600">Evaluate model options for AI-powered product features.</p>
+                </div>
+              </div>
+            </div>
+
+            <!-- Parameters Section -->
+            <div class="bg-gray-50 rounded-lg p-4 mb-6">
+              <h3 class="text-lg font-semibold mb-3">Parameters</h3>
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div>
+                  <h4 class="font-medium text-gray-700">task</h4>
+                  <p class="text-sm text-gray-600">The task to filter models by (e.g., "summarization")</p>
+                </div>
+                <div>
+                  <h4 class="font-medium text-gray-700">limit</h4>
+                  <p class="text-sm text-gray-600">The number of results to return (default to 30)</p>
+                </div>
+              </div>
+            </div>
             
             <!-- Language Tabs -->
             <div class="mb-4">
