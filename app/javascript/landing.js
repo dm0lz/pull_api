@@ -81,7 +81,7 @@ document.addEventListener("turbo:load", () => {
   const hash = window.location.hash;
   if (hash) {
     const link = document.querySelector('[href="' + hash + '"]');
-    if (link.dataset.endpoint) {
+    if (link?.dataset?.endpoint) {
       openAccordion(link.dataset.endpoint);
     }
     const el = document.querySelector(hash);
