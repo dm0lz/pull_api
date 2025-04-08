@@ -1,0 +1,51 @@
+<!-- Footer -->
+<footer class="bg-white">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-8">
+      <div>
+        <h3 class="text-sm font-semibold text-gray-400 tracking-wider uppercase">Product</h3>
+        <ul class="mt-4 space-y-4">
+          <li>
+            <%= link_to "Features", "#{public_root_path}#features", class: "text-base text-gray-500 hover:text-gray-900" %>
+          </li>
+          <li>
+            <%= link_to "Pricing", "#{public_root_path}#pricing", class: "text-base text-gray-500 hover:text-gray-900" %>
+          </li>
+          <li>
+            <%= link_to "Documentation", "/docs", class: "text-base text-gray-500 hover:text-gray-900" %>
+          </li>
+        </ul>
+      </div>
+      <div>
+        <h3 class="text-sm font-semibold text-gray-400 tracking-wider uppercase">Company</h3>
+        <ul class="mt-4 space-y-4">
+          <li>
+            <%= link_to "About", "#{public_root_path}#about", class: "text-base text-gray-500 hover:text-gray-900" %>
+          </li>
+          <li>
+            <%= link_to "Blog", public_posts_path, class: "text-base text-gray-500 hover:text-gray-900" %>
+          </li>
+          <li><a href="#" class="text-base text-gray-500 hover:text-gray-900">Contact</a></li>
+        </ul>
+      </div>
+      <div>
+        <h3 class="text-sm font-semibold text-gray-400 tracking-wider uppercase">Legal</h3>
+        <ul class="mt-4 space-y-4">
+          <li><a href="#" class="text-base text-gray-500 hover:text-gray-900">Privacy</a></li>
+          <li><a href="#" class="text-base text-gray-500 hover:text-gray-900">Terms</a></li>
+        </ul>
+      </div>
+      <div>
+        <h3 class="text-sm font-semibold text-gray-400 tracking-wider uppercase">Connect</h3>
+        <ul class="mt-4 space-y-4">
+          <li><a href="#" class="text-base text-gray-500 hover:text-gray-900">GitHub</a></li>
+          <li><a href="#" class="text-base text-gray-500 hover:text-gray-900">Twitter</a></li>
+          <li><a href="#" class="text-base text-gray-500 hover:text-gray-900">LinkedIn</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="mt-12 border-t border-gray-200 pt-8">
+      <p class="text-base text-gray-400 text-center">&copy; 2025 WebScraperAPI. All rights reserved.</p>
+    </div>
+  </div>
+</footer>

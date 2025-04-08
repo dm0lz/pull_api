@@ -22,7 +22,7 @@ function openAccordion(id) {
   const icon = button.querySelector(".lucide-chevron-up, .lucide-chevron-down");
   content.classList.remove("hidden");
   if (icon) {
-    icon.classList.toggle("rotate-180");
+    icon.classList.add("rotate-180");
   }
   if (!content.classList.contains("hidden")) {
     Prism.highlightAll();
