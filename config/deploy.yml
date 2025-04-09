@@ -1,17 +1,17 @@
 # Name of your application. Used to uniquely configure containers.
-service: software_markets
+service: pull_api
 
 # Name of the container image.
-image: olivier86/software_markets
+image: olivier86/pull_api
 
 # Deploy to these servers.
 servers:
   web:
     hosts:
-      - fetchserp.com
+      - pullapi.com
   job:
     hosts:
-      - fetchserp.com
+      - pullapi.com
     cmd: bin/jobs
 
 # Enable SSL auto certification via Let's Encrypt and allow for multiple apps on a single web server.
@@ -22,8 +22,8 @@ proxy:
   ssl: true
   response_timeout: 90
   hosts:
-    - fetchserp.com
-    - www.fetchserp.com
+    - pullapi.com
+    - www.pullapi.com
 
 # Credentials for your image host.
 registry:
@@ -53,10 +53,10 @@ env:
     # WEB_CONCURRENCY: 2
 
     # Match this to any external database server to configure Active Record correctly
-    # Use software_markets-db for a db accessory server on same machine via local kamal docker network.
-    DB_HOST: software_markets-db
-    OLLAMA_IP: software_markets-ollama
-    GOOGLE_SERP_HOST: fetchserp.com:31955
+    # Use pull_api-db for a db accessory server on same machine via local kamal docker network.
+    DB_HOST: pull_api-db
+    OLLAMA_IP: pull_api-ollama
+    GOOGLE_SERP_HOST: pullapi.com:31955
 
     # Log everything from Rails
     # RAILS_LOG_LEVEL: debug
@@ -72,7 +72,7 @@ aliases:
 # Use a persistent storage volume for sqlite database files and local Active Storage files.
 # Recommended to change this to a mounted volume path that is backed up off server.
 volumes:
-  - "software_markets_storage:/rails/storage"
+  - "pull_api_storage:/rails/storage"
 
 # Bridge fingerprinted assets, like JS and CSS, between versions to avoid
 # hitting 404 on in-flight requests. Combines all files from new and old
@@ -122,12 +122,12 @@ builder:
 accessories:
   db:
     image: pgvector/pgvector:pg17
-    host: fetchserp.com
+    host: pullapi.com
     port: "127.0.0.1:5432:5432"
     env:
       clear:
-        POSTGRES_USER: "software_markets"
-        POSTGRES_DB: "software_markets_production"
+        POSTGRES_USER: "pull_api"
+        POSTGRES_DB: "pull_api_production"
       secret:
         - POSTGRES_PASSWORD
     files:
@@ -136,7 +136,7 @@ accessories:
       - data:/var/lib/postgresql/data
   ollama:
     image: ollama/ollama:latest
-    host: fetchserp.com
+    host: pullapi.com
     port: "127.0.0.1:11434:11434"
     files:
       - Modelfile:/ollama-config/Modelfile

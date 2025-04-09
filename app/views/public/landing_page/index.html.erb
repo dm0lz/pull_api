@@ -8,7 +8,7 @@
         <span class="text-indigo-600">AI powered Data Analysis</span>
       </h1>
       <p class="mt-6 max-w-2xl mx-auto text-xl text-gray-500">
-        Transform Web Data into Actionable Insights with FetchSERP's Scraping & AI API
+        Transform Web Data into Actionable Insights with PullAPI's Scraping & AI API
       </p>
     </div>
   </section>
@@ -17,12 +17,12 @@
     <div class="max-w-4xl mx-auto p-8 bg-white rounded-xl shadow-lg text-lg">
       <!-- Intro Section -->
       <p class="mb-6">
-        FetchSERP delivers cutting-edge web scraping and AI-powered data extraction solutions that transform raw data into actionable insights fast, efficiently, and at scale.
+        PullAPI delivers cutting-edge web scraping and AI-powered data extraction solutions that transform raw data into actionable insights fast, efficiently, and at scale.
       </p>
 
       <!-- What We Do Section -->
       <p>
-        With a robust API that combines advanced web scraping with intelligent AI analysis, FetchSERP empowers developers, businesses, and analysts to unlock the full potential of online data.
+        With a robust API that combines advanced web scraping with intelligent AI analysis, PullAPI empowers developers, businesses, and analysts to unlock the full potential of online data.
       </p>
     </div>
   </section>
@@ -233,13 +233,13 @@
 
             <!-- Code Examples -->
             <div id="curl" class="curl code-block">
-              <pre><code class="language-bash">curl -X GET "https://www.fetchserp.com/api/v1/serp?search_engine=duckduckgo&pages_number=2&query=tesla" \
+              <pre><code class="language-bash">curl -X GET "https://www.pullapi.com/api/v1/serp?search_engine=duckduckgo&pages_number=2&query=tesla" \
  -H 'accept: application/json'\
  -H 'authorization: Bearer YOUR_API_TOKEN'</code></pre>
             </div>
 
             <div id="javascript" class="javascript code-block hidden">
-              <pre><code class="language-javascript">const response = await fetch('https://www.fetchserp.com/api/v1/serp?search_engine=duckduckgo&pages_number=2&query=tesla', {
+              <pre><code class="language-javascript">const response = await fetch('https://www.pullapi.com/api/v1/serp?search_engine=duckduckgo&pages_number=2&query=tesla', {
   method: 'GET',
   headers: {
     'accept': 'application/json',
@@ -256,7 +256,7 @@ console.log(data);</code></pre>
 require 'uri'
 require 'json'
 
-uri = URI("https://www.fetchserp.com/api/v1/serp?search_engine=duckduckgo&pages_number=2&query=tesla")
+uri = URI("https://www.pullapi.com/api/v1/serp?search_engine=duckduckgo&pages_number=2&query=tesla")
 request = Net::HTTP::Get.new(uri)
 request['Authorization'] = 'Bearer YOUR_API_TOKEN'  # Replace with your actual API token
 request['Accept'] = 'application/json'
@@ -269,7 +269,7 @@ puts JSON.pretty_generate(JSON.parse(response.body))</code></pre>
             <div id="python" class="python code-block hidden">
               <pre><code class="language-python">import requests
 
-url = "https://www.fetchserp.com/api/v1/serp?search_engine=duckduckgo&pages_number=2&query=tesla"
+url = "https://www.pullapi.com/api/v1/serp?search_engine=duckduckgo&pages_number=2&query=tesla"
 headers = {
     "Authorization": "Bearer YOUR_API_TOKEN",  # Replace with your actual API token
     "Accept": "application/json"
@@ -423,7 +423,7 @@ print(response.json())</code></pre>
 
             <!-- Code Examples -->
             <div class="curl code-block">
-              <pre><code class="language-bash">curl -X POST "https://www.fetchserp.com/api/v1/hf_inference" \
+              <pre><code class="language-bash">curl -X POST "https://www.pullapi.com/api/v1/hf_inference" \
  -H 'accept: application/json'\
  -H 'authorization: Bearer YOUR_API_TOKEN'\
  -H 'content-type: application/json' \
@@ -435,7 +435,7 @@ print(response.json())</code></pre>
             </div>
 
             <div class="javascript code-block hidden">
-              <pre><code class="language-javascript">const url = "https://www.fetchserp.com/api/v1/hf_inference";
+              <pre><code class="language-javascript">const url = "https://www.pullapi.com/api/v1/hf_inference";
 const headers = {
   "Accept": "application/json",
   "Authorization": "Bearer YOUR_API_TOKEN",  // Replace with your actual token
@@ -638,7 +638,7 @@ print(response.json())</code></pre>
 
             <!-- Code Examples -->
             <div class="curl code-block">
-              <pre><code class="language-bash">curl -X POST "https://www.fetchserp.com/api/v1/scrap_web_page" \
+              <pre><code class="language-bash">curl -X POST "https://www.pullapi.com/api/v1/scrap_web_page" \
  -H 'accept: application/json'\
  -H 'authorization: Bearer YOUR_API_TOKEN'\
  -H 'content-type: application/json' \
@@ -649,7 +649,7 @@ print(response.json())</code></pre>
             </div>
 
             <div class="javascript code-block hidden">
-              <pre><code class="language-javascript">const url = "https://www.fetchserp.com/api/v1/scrap_web_page";
+              <pre><code class="language-javascript">const url = "https://www.pullapi.com/api/v1/scrap_web_page";
 const headers = {
   "Accept": "application/json",
   "Authorization": "Bearer YOUR_API_TOKEN", // Replace with your actual API token
@@ -676,7 +676,7 @@ fetch(url, {
 require 'uri'
 require 'json'
 
-url = URI.parse("https://www.fetchserp.com/api/v1/scrap_web_page")
+url = URI.parse("https://www.pullapi.com/api/v1/scrap_web_page")
 http = Net::HTTP.new(url.host, url.port)
 http.use_ssl = true  # Enable HTTPS
 
@@ -704,7 +704,7 @@ puts JSON.parse(response.body)</code></pre>
               <pre><code class="language-python">import requests
 import json
 
-url = "https://www.fetchserp.com/api/v1/scrap_web_page"
+url = "https://www.pullapi.com/api/v1/scrap_web_page"
 headers = {
     "Accept": "application/json",
     "Authorization": "Bearer YOUR_API_TOKEN",  # Replace with your actual API token
@@ -846,7 +846,7 @@ print(response.json())</code></pre>
 
             <!-- Code Examples -->
             <div class="curl code-block">
-              <pre><code class="language-bash">curl -X POST "https://www.fetchserp.com/api/v1/scrap_web_pages" \
+              <pre><code class="language-bash">curl -X POST "https://www.pullapi.com/api/v1/scrap_web_pages" \
  -H 'accept: application/json'\
  -H 'authorization: Bearer YOUR_API_TOKEN'\
  -H 'content-type: application/json' \
@@ -858,7 +858,7 @@ print(response.json())</code></pre>
             </div>
 
             <div class="javascript code-block hidden">
-              <pre><code class="language-javascript">const url = "https://www.fetchserp.com/api/v1/scrap_web_pages";
+              <pre><code class="language-javascript">const url = "https://www.pullapi.com/api/v1/scrap_web_pages";
 
 const headers = {
   "Accept": "application/json",
@@ -886,7 +886,7 @@ fetch(url, {
 require 'uri'
 require 'json'
 
-url = URI.parse("https://www.fetchserp.com/api/v1/scrap_web_pages")
+url = URI.parse("https://www.pullapi.com/api/v1/scrap_web_pages")
 http = Net::HTTP.new(url.host, url.port)
 http.use_ssl = true  # Enable HTTPS
 
@@ -913,7 +913,7 @@ puts JSON.parse(response.body)</code></pre>
             <div class="python code-block hidden">
               <pre><code class="language-python">import requests
 
-url = "https://www.fetchserp.com/api/v1/scrap_web_pages"
+url = "https://www.pullapi.com/api/v1/scrap_web_pages"
 headers = {
     "Accept": "application/json",
     "Authorization": "Bearer YOUR_API_TOKEN",  # Replace with your actual API key
@@ -1062,7 +1062,7 @@ print(response.json())</code></pre>
 
             <!-- Code Examples -->
             <div class="curl code-block">
-              <pre><code class="language-bash">curl -X POST "https://www.fetchserp.com/api/v1/scrap_domain" \
+              <pre><code class="language-bash">curl -X POST "https://www.pullapi.com/api/v1/scrap_domain" \
   -H 'accept: application/json'\
   -H 'authorization: Bearer YOUR_API_TOKEN'\
   -H 'content-type: application/json' \
@@ -1074,7 +1074,7 @@ print(response.json())</code></pre>
             </div>
 
             <div class="javascript code-block hidden">
-              <pre><code class="language-javascript">const url = "https://www.fetchserp.com/api/v1/scrap_domain";
+              <pre><code class="language-javascript">const url = "https://www.pullapi.com/api/v1/scrap_domain";
 
 const headers = {
   "Accept": "application/json",
@@ -1102,7 +1102,7 @@ fetch(url, {
 require 'uri'
 require 'json'
 
-url = URI.parse("https://www.fetchserp.com/api/v1/scrap_domain")
+url = URI.parse("https://www.pullapi.com/api/v1/scrap_domain")
 http = Net::HTTP.new(url.host, url.port)
 http.use_ssl = true  # Enable HTTPS
 
@@ -1130,7 +1130,7 @@ puts JSON.pretty_generate(JSON.parse(response.body))</code></pre>
               <pre><code class="language-python">import requests
 import json
 
-url = "https://www.fetchserp.com/api/v1/scrap_domain"
+url = "https://www.pullapi.com/api/v1/scrap_domain"
 headers = {
     "Accept": "application/json",
     "Authorization": "Bearer YOUR_API_TOKEN",  # Replace with your actual API key
@@ -1279,14 +1279,14 @@ print(json.dumps(response.json(), indent=2))</code></pre>
 
             <!-- Code Examples -->
             <div class="curl code-block">
-              <pre><code class="language-bash">curl -X GET "https://www.fetchserp.com/api/v1/company_domain?company=taboola" \
+              <pre><code class="language-bash">curl -X GET "https://www.pullapi.com/api/v1/company_domain?company=taboola" \
  -H 'accept: application/json'\
  -H 'authorization: Bearer YOUR_API_TOKEN'
  </code></pre>
             </div>
 
             <div class="javascript code-block hidden">
-              <pre><code class="language-javascript">const url = "https://www.fetchserp.com/api/v1/company_domain?company=taboola";
+              <pre><code class="language-javascript">const url = "https://www.pullapi.com/api/v1/company_domain?company=taboola";
 
 const headers = {
   "Accept": "application/json",
@@ -1307,7 +1307,7 @@ fetch(url, {
 require 'uri'
 require 'json'
 
-url = URI.parse("https://www.fetchserp.com/api/v1/company_domain?company=taboola")
+url = URI.parse("https://www.pullapi.com/api/v1/company_domain?company=taboola")
 http = Net::HTTP.new(url.host, url.port)
 http.use_ssl = true  # Enable HTTPS
 
@@ -1328,7 +1328,7 @@ puts JSON.pretty_generate(JSON.parse(response.body))</code></pre>
               <pre><code class="language-python">import requests
 import json
 
-url = "https://www.fetchserp.com/api/v1/company_domain?company=taboola"
+url = "https://www.pullapi.com/api/v1/company_domain?company=taboola"
 headers = {
     "Accept": "application/json",
     "Authorization": "Bearer YOUR_API_TOKEN"  # Replace with your actual API token
@@ -1458,14 +1458,14 @@ print(json.dumps(response.json(), indent=2))</code></pre>
 
             <!-- Code Examples -->
             <div class="curl code-block">
-              <pre><code class="language-bash">curl -X GET "https://www.fetchserp.com/api/v1/domain_emails?domain=taboola.com" \
+              <pre><code class="language-bash">curl -X GET "https://www.pullapi.com/api/v1/domain_emails?domain=taboola.com" \
  -H 'accept: application/json'\
  -H 'authorization: Bearer YOUR_API_TOKEN' 
  </code></pre>
             </div>
 
             <div class="javascript code-block hidden">
-              <pre><code class="language-javascript">const url = "https://www.fetchserp.com/api/v1/domain_emails?domain=taboola.com";
+              <pre><code class="language-javascript">const url = "https://www.pullapi.com/api/v1/domain_emails?domain=taboola.com";
 
 const headers = {
   "Accept": "application/json",
@@ -1486,7 +1486,7 @@ fetch(url, {
 require 'uri'
 require 'json'
 
-url = URI.parse("https://www.fetchserp.com/api/v1/domain_emails?domain=taboola.com")
+url = URI.parse("https://www.pullapi.com/api/v1/domain_emails?domain=taboola.com")
 http = Net::HTTP.new(url.host, url.port)
 http.use_ssl = true  # Enable HTTPS
 
@@ -1507,7 +1507,7 @@ puts JSON.parse(response.body)</code></pre>
               <pre><code class="language-python">import requests
 import json
 
-url = "https://www.fetchserp.com/api/v1/domain_emails?domain=taboola.com"
+url = "https://www.pullapi.com/api/v1/domain_emails?domain=taboola.com"
 headers = {
     "Accept": "application/json",
     "Authorization": "Bearer YOUR_API_TOKEN"  # Replace with your actual API token
@@ -1648,7 +1648,7 @@ print(json.dumps(response.json(), indent=2))</code></pre>
 
             <!-- Code Examples -->
             <div class="curl code-block">
-              <pre><code class="language-bash">curl -X POST "https://www.fetchserp.com/api/v1/analyze_web_page" \
+              <pre><code class="language-bash">curl -X POST "https://www.pullapi.com/api/v1/analyze_web_page" \
  -H 'accept: application/json'\
  -H 'authorization: Bearer YOUR_API_TOKEN'\
  -H 'content-type: application/json' \
@@ -1659,7 +1659,7 @@ print(json.dumps(response.json(), indent=2))</code></pre>
             </div>
 
             <div class="javascript code-block hidden">
-              <pre><code class="language-javascript">const url = "https://www.fetchserp.com/api/v1/analyze_web_page";
+              <pre><code class="language-javascript">const url = "https://www.pullapi.com/api/v1/analyze_web_page";
 
 const headers = {
   "Accept": "application/json",
@@ -1687,7 +1687,7 @@ fetch(url, {
 require 'uri'
 require 'json'
 
-url = URI.parse("https://www.fetchserp.com/api/v1/analyze_web_page")
+url = URI.parse("https://www.pullapi.com/api/v1/analyze_web_page")
 http = Net::HTTP.new(url.host, url.port)
 http.use_ssl = true  # Enable HTTPS
 
@@ -1715,7 +1715,7 @@ puts JSON.pretty_generate(JSON.parse(response.body))</code></pre>
               <pre><code class="language-python">import requests
 import json
 
-url = "https://www.fetchserp.com/api/v1/analyze_web_page"
+url = "https://www.pullapi.com/api/v1/analyze_web_page"
 headers = {
     "Accept": "application/json",
     "Authorization": "Bearer YOUR_API_TOKEN",  # Replace with your actual API token
@@ -1863,7 +1863,7 @@ print(json.dumps(response.json(), indent=2))</code></pre>
 
             <!-- Code Examples -->
             <div class="curl code-block">
-              <pre><code class="language-bash">curl -X POST "https://www.fetchserp.com/api/v1/analyze_serp" \
+              <pre><code class="language-bash">curl -X POST "https://www.pullapi.com/api/v1/analyze_serp" \
  -H 'accept: application/json'\
  -H 'authorization: Bearer YOUR_API_TOKEN'\
  -H 'content-type: application/json' \
@@ -1876,7 +1876,7 @@ print(json.dumps(response.json(), indent=2))</code></pre>
             </div>
 
             <div class="javascript code-block hidden">
-              <pre><code class="language-javascript">const url = "https://www.fetchserp.com/api/v1/analyze_serp";
+              <pre><code class="language-javascript">const url = "https://www.pullapi.com/api/v1/analyze_serp";
 
 const headers = {
   "Accept": "application/json",
@@ -1906,7 +1906,7 @@ fetch(url, {
 require 'uri'
 require 'json'
 
-url = URI.parse("https://www.fetchserp.com/api/v1/analyze_serp")
+url = URI.parse("https://www.pullapi.com/api/v1/analyze_serp")
 http = Net::HTTP.new(url.host, url.port)
 http.use_ssl = true  # Enable HTTPS
 
@@ -1936,7 +1936,7 @@ puts JSON.parse(response.body)</code></pre>
               <pre><code class="language-python">import requests
 import json
 
-url = "https://www.fetchserp.com/api/v1/analyze_serp"
+url = "https://www.pullapi.com/api/v1/analyze_serp"
 headers = {
     "Accept": "application/json",
     "Authorization": "Bearer YOUR_API_TOKEN",  # Replace with your actual API token
@@ -2078,13 +2078,13 @@ print(json.dumps(response.json(), indent=2))</code></pre>
 
             <!-- Code Examples -->
             <div class="curl code-block">
-              <pre><code class="language-bash">curl -X GET "https://www.fetchserp.com/api/v1/hf_models?task=summarization" \
+              <pre><code class="language-bash">curl -X GET "https://www.pullapi.com/api/v1/hf_models?task=summarization" \
  -H 'accept: application/json'\
  -H 'authorization: Bearer YOUR_API_TOKEN'</code></pre>
             </div>
 
             <div class="javascript code-block hidden">
-              <pre><code class="language-javascript">const url = "https://www.fetchserp.com/api/v1/hf_models?task=summarization";
+              <pre><code class="language-javascript">const url = "https://www.pullapi.com/api/v1/hf_models?task=summarization";
 
 const headers = {
   "Accept": "application/json",
@@ -2105,7 +2105,7 @@ fetch(url, {
 require 'uri'
 require 'json'
 
-url = URI.parse("https://www.fetchserp.com/api/v1/hf_models?task=summarization")
+url = URI.parse("https://www.pullapi.com/api/v1/hf_models?task=summarization")
 http = Net::HTTP.new(url.host, url.port)
 http.use_ssl = true  # Enable HTTPS
 
@@ -2126,7 +2126,7 @@ puts JSON.parse(response.body)</code></pre>
               <pre><code class="language-python">import requests
 import json
 
-url = "https://www.fetchserp.com/api/v1/hf_models?task=summarization"
+url = "https://www.pullapi.com/api/v1/hf_models?task=summarization"
 headers = {
     "Accept": "application/json",
     "Authorization": "Bearer YOUR_API_TOKEN"  # Replace with your actual API token
@@ -2169,7 +2169,7 @@ print(json.dumps(response.json(), indent=2))</code></pre>
           <%= link_to "Get API key", app_root_path, class: "inline-flex items-center px-6 py-3 text-base font-medium text-white bg-indigo-600 rounded-md hover:bg-indigo-700 transition-colors" %>
         </div>
         <div class="bg-gray-800 rounded-lg p-6 text-left overflow-x-auto">
-          <pre><code class="language-bash">curl -X POST "https://www.fetchserp.com/api/v1/scrap_web_page" \
+          <pre><code class="language-bash">curl -X POST "https://www.pullapi.com/api/v1/scrap_web_page" \
  -H 'accept: application/json'\
  -H 'authorization: Bearer YOUR_API_TOKEN'\
  -H 'content-type: application/json' \

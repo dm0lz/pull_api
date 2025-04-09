@@ -6,6 +6,6 @@ class Public::ApplicationController < ApplicationController
 
   private
   def set_session_id
-    @session_id = cookies.encrypted["_software_markets_session"]["session_id"] rescue nil
+    @session_id = cookies.encrypted["_pull_api_session"]["session_id"] rescue nil
   end
 end

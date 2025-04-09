@@ -11,7 +11,7 @@ module ApplicationCable
         if session = Session.find_by(id: cookies.signed[:session_id])
           self.session_id = session.user.id
         else
-          self.session_id = cookies.encrypted["_software_markets_session"]["session_id"] rescue nil
+          self.session_id = cookies.encrypted["_pull_api_session"]["session_id"] rescue nil
         end
       end
   end

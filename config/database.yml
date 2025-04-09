@@ -24,24 +24,24 @@ default: &default
 development:
   primary:
     <<: *default
-    database: software_market_development
+    database: pull_api_development
   secondary:
     <<: *default
-    database: secondary_software_market_development
+    database: secondary_pull_api_development
   queue:
     <<: *default
-    database: software_market_development_queue
+    database: pull_api_development_queue
     migrations_paths: db/queue_migrate
   cable:
     <<: *default
-    database: software_markets_production_cable
+    database: pull_api_production_cable
     migrations_paths: db/cable_migrate
 
   # The specified database role being used to connect to PostgreSQL.
   # To create additional roles in PostgreSQL see `$ createuser --help`.
   # When left blank, PostgreSQL will use the default role. This is
   # the same name as the operating system user running Rails.
-  #username: software_market
+  #username: pull_api
 
   # The password associated with the PostgreSQL role (username).
   #password:
@@ -69,7 +69,7 @@ development:
 # Do not set this db to the same as development or production.
 test:
   <<: *default
-  database: software_market_test
+  database: pull_api_test
 
 # As with config/credentials.yml, you never want to store sensitive information,
 # like your database password, in your source code. If your source code is
@@ -94,18 +94,18 @@ test:
 production:
   primary: &primary_production
     <<: *default
-    database: software_markets_production
-    username: software_markets
+    database: pull_api_production
+    username: pull_api
     password: <%= ENV["POSTGRES_PASSWORD"] %>
   cache:
     <<: *primary_production
-    database: software_markets_production_cache
+    database: pull_api_production_cache
     migrations_paths: db/cache_migrate
   queue:
     <<: *primary_production
-    database: software_markets_production_queue
+    database: pull_api_production_queue
     migrations_paths: db/queue_migrate
   cable:
     <<: *primary_production
-    database: software_markets_production_cable
+    database: pull_api_production_cable
     migrations_paths: db/cable_migrate

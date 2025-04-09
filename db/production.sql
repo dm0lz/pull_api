@@ -1,4 +1,4 @@
-CREATE DATABASE IF NOT EXISTS software_markets_production;
-CREATE DATABASE IF NOT EXISTS software_markets_production_cache;
-CREATE DATABASE IF NOT EXISTS software_markets_production_queue;
-CREATE DATABASE IF NOT EXISTS software_markets_production_cable;
+CREATE DATABASE IF NOT EXISTS pull_api_production;
+CREATE DATABASE IF NOT EXISTS pull_api_production_cache;
+CREATE DATABASE IF NOT EXISTS pull_api_production_queue;
+CREATE DATABASE IF NOT EXISTS pull_api_production_cable;

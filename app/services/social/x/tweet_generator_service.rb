@@ -12,7 +12,7 @@ class Social::X::TweetGeneratorService < BaseService
   def user_prompt
     <<-TXT
       Generate a tweet about the following topic (max 280 characters) : #{@topic}
-      Include a link to my app : https://www.fetchserp.com
+      Include a link to my app : https://www.pullapi.com
     TXT
   end
 

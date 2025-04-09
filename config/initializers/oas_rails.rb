@@ -5,7 +5,7 @@ OasRails.configure do |config|
   config.info.version = "1.0.0"
   config.info.summary = "OasRails: Automatic Interactive API Documentation for Rails"
   config.info.description = <<~HEREDOC
-    # Fetchserp API
+    # PullAPI
 
     This API provides endpoints for retrieving and analyzing data.
 
@@ -30,7 +30,7 @@ OasRails.configure do |config|
 
     API requests are limited to 5 requests per minute per API token.
 
-    For more information, contact support@softwaremarkets.com
+    For more information, contact support@pullapi.com
 
   HEREDOC
   # config.info.contact.name = "a-chacon"
@@ -39,7 +39,7 @@ OasRails.configure do |config|
 
   # Servers Information. For more details follow: https://spec.openapis.org/oas/latest.html#server-object
   config.servers = [
-    { url: "https://www.fetchserp.com", description: "Production" },
+    { url: "https://www.pullapi.com", description: "Production" },
     { url: "http://localhost:3000", description: "Local" }
   ]
 
