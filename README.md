@@ -249,4 +249,4 @@ This project is licensed under the MIT License - see the LICENSE.md file for det
 
 ## Support
 
-For support, email support@pullapi.com or create an issue in the repository.
+For support, email contact@pullapi.com or create an issue in the repository.

@@ -30,7 +30,7 @@ OasRails.configure do |config|
 
     API requests are limited to 5 requests per minute per API token.
 
-    For more information, contact support@pullapi.com
+    For more information, contact contact@pullapi.com
 
   HEREDOC
   # config.info.contact.name = "a-chacon"
