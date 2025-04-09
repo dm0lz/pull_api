@@ -20,7 +20,7 @@ servers:
 # Note: If using Cloudflare, set encryption mode in SSL/TLS setting to "Full" to enable CF-to-app encryption.
 proxy:
   ssl: true
-  response_timeout: 90
+  response_timeout: 120
   hosts:
     - pullapi.com
     - www.pullapi.com
@@ -56,7 +56,7 @@ env:
     # Use pull_api-db for a db accessory server on same machine via local kamal docker network.
     DB_HOST: pull_api-db
     OLLAMA_IP: pull_api-ollama
-    GOOGLE_SERP_HOST: pullapi.com:31955
+    GOOGLE_SERP_HOST: fetchserp.com:31955
 
     # Log everything from Rails
     # RAILS_LOG_LEVEL: debug
