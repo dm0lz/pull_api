@@ -1,6 +1,5 @@
-class OasRails::OasRailsController < ApplicationController
+class OasRails::OasRailsController < OasRails::ApplicationController
   # Include URL help if the layout is a user-customized layout.
-  allow_unauthenticated_access
   include Rails.application.routes.url_helpers
   before_action :set_current_user
 
