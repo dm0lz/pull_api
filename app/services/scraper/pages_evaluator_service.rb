@@ -11,39 +11,16 @@ class Scraper::PagesEvaluatorService < BaseService
   end
 
   private
-  # def js_code(script)
-  #   <<-JS
-  #     const { chromium } = require("playwright-extra");
-  #     const stealth = require("puppeteer-extra-plugin-stealth")();
-  #     chromium.use(stealth);
-  #     (async () => {
-  #       const browser = await chromium.launch(#{@options});
-  #       const results = [];
-  #       for (const url of #{@urls}) {
-  #         try {
-  #           const page = await browser.newPage();
-  #           await page.goto(url);
-  #           const data = await page.evaluate(() => {
-  #             #{script}
-  #           });
-  #           results.push(data);
-  #           await page.close();
-  #         } catch (error) {}
-  #       }
-  #       console.log(JSON.stringify(results));
-  #       await browser.close();
-  #     })();
-  #   JS
-  # end
-
   def js_code(script)
     <<-JS
       const { chromium } = require("playwright-extra");
       const stealth = require("puppeteer-extra-plugin-stealth")();
+      const { Mutex } = require("async-mutex");
       chromium.use(stealth);
       (async () => {
         const browser = await chromium.launch(#{@options});
         const results = [];
+        const mutex = new Mutex();
         await Promise.all(
           #{@urls}.map(async(url) => {
             try {
@@ -52,7 +29,12 @@ class Scraper::PagesEvaluatorService < BaseService
               const data = await page.evaluate(() => {
                 #{script}
               });
-              results.push(data);
+              const release = await mutex.acquire();
+              try {
+                results.push(data);
+              } finally {
+                release();
+              }
               await page.close();
             } catch (error) {}
           })
