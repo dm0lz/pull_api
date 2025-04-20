@@ -19,6 +19,8 @@ class ApiSession < ApplicationRecord
       "api/v1/domain_emails" => 2,
       "api/v1/analyze_web_page" => 2,
       "api/v1/analyze_serp" => 2,
+      "api/v1/speech_to_text" => 2,
+      "api/v1/recaptcha_solver" => 2,
       "api/v1/hf_models" => 0
     }
   end

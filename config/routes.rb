@@ -52,6 +52,9 @@ Rails.application.routes.draw do
       post "hf_inference", to: "hf_inference#create"
       post "analyze_web_page", to: "analyze_web_page#create"
       post "analyze_serp", to: "analyze_serp#create"
+      post "speech_to_text", to: "speech_to_text#create"
+      post "recaptcha_solver", to: "recaptcha_solver#create"
+      post "recaptcha_solver/step2", to: "recaptcha_solver#step_2"
     end
   end
 

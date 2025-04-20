@@ -11,7 +11,7 @@ module ApiAuthentication
     if api_token = request.headers["Authorization"]&.split(" ")&.last
       user = User.find_by(api_token: api_token)
       render json: { error: "Insufficient API credit." }, status: :payment_required and return if user&.api_credit <= 0
-      render json: { error: "Rate limit exceeded." }, status: :too_many_requests and return if user.api_sessions.where("created_at >= ?", 1.minute.ago).count >= 5
+      # render json: { error: "Rate limit exceeded." }, status: :too_many_requests and return if user.api_sessions.where("created_at >= ?", 1.minute.ago).count >= 5
       Current.api_session = user.api_sessions.create!(user_agent: request.user_agent, ip_address: request.remote_ip, endpoint: params.permit(:controller)[:controller], request_params: params) if user
     end
 

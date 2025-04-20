@@ -1,0 +1,1 @@
+json.transcription @text["text"]
