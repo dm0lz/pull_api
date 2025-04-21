@@ -53,9 +53,10 @@ Rails.application.routes.draw do
       post "analyze_web_page", to: "analyze_web_page#create"
       post "analyze_serp", to: "analyze_serp#create"
       post "speech_to_text", to: "speech_to_text#create"
-      post "recaptcha_solver", to: "recaptcha_solver#create"
-      post "recaptcha_solver/step2", to: "recaptcha_solver#step_2"
     end
+    post "recaptcha_solver/image_classification_challenge", to: "recaptcha_solver#image_classification_challenge"
+    post "recaptcha_solver/images_classification_challenge", to: "recaptcha_solver#images_classification_challenge"
+    post "recaptcha_solver/object_localization_challenge", to: "recaptcha_solver#object_localization_challenge"
   end
 
   # Defines the root path route ("/")

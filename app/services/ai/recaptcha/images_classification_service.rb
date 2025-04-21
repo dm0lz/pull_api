@@ -1,4 +1,4 @@
-class Ai::Recaptcha::Solver2Service < BaseService
+class Ai::Recaptcha::ImagesClassificationService < BaseService
   def initialize(base64_images:, tiles_nb:, keyword:)
     @base64_images = base64_images # [{base64: "base64_image", tiles_nb: 9, is_grid: true, index: 0}]
     @tiles_nb = tiles_nb
@@ -23,6 +23,7 @@ class Ai::Recaptcha::Solver2Service < BaseService
       import sys
       import logging
       import math
+      import torch
       from PIL import Image
       from ultralytics import YOLO
 
@@ -35,7 +36,7 @@ class Ai::Recaptcha::Solver2Service < BaseService
       keyword = "#{@keyword}".lower()
 
       # Load YOLO model
-      model = YOLO("yolov8x-oiv7.pt")  # Open Images V7 model
+      model = YOLO("yolov8x-cls.pt")  # Open Images V7 model
       logger.debug(f"Model classes: {model.names}")
 
       # Sort images by index to ensure consistent output order
@@ -121,17 +122,28 @@ class Ai::Recaptcha::Solver2Service < BaseService
               logger.debug(f"Index {index}: Processed image saved at {processed_path}")
 
               # Run YOLO prediction
-              preds = model(processed_path, conf=0.05)[0]
+              preds = model(processed_path, conf=0.01)[0]
 
-              names = preds.names
-              classes = preds.boxes.cls.tolist() if preds.boxes.cls is not None else []
+              # Get top-5 class indices
+              # top5_ids = preds.probs.top5  # List of integers
+              probs_tensor = preds.probs.data
+              top15_ids = torch.topk(probs_tensor, 15).indices.tolist()
+              names = preds.names          # List or dict of class names
+              # Check if keyword is in any of the top-5 class names
+              found = any(
+                keyword in names[class_id].lower().replace("_", " ")
+                for class_id in top15_ids
+              )
+
+              # names = preds.names
+              # classes = preds.boxes.cls.tolist() if preds.boxes.cls is not None else []
 
               # Debug: Log detected classes
               # detected_classes = [names[int(cls)] for cls in classes]
               # logger.debug(f"Index {index}: Detected classes = {detected_classes}")
 
               # Single keyword matching
-              found = any(keyword in names[int(cls)].lower() for cls in classes)
+              # found = any(keyword in names[int(cls)].lower() for cls in classes)
               results.append(found)
 
               os.remove(processed_path)

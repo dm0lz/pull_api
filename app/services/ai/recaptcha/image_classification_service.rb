@@ -1,4 +1,4 @@
-class Ai::Recaptcha::SolverService < BaseService
+class Ai::Recaptcha::ImageClassificationService < BaseService
   def initialize(img_base64:, tiles_nb:, keyword:)
     @img_base64 = img_base64
     @tiles_nb = tiles_nb
@@ -24,6 +24,7 @@ class Ai::Recaptcha::SolverService < BaseService
       from ultralytics import YOLO
       import logging
       import ipdb
+      import torch
 
       logging.getLogger("ultralytics").setLevel(logging.CRITICAL)
 
@@ -53,7 +54,7 @@ class Ai::Recaptcha::SolverService < BaseService
       tile_width = width // cols
       tile_height = height // rows
 
-      model = YOLO("yolov8x-oiv7.pt")
+      model = YOLO("yolov8x-cls.pt")
 
       results = []
 
@@ -75,13 +76,24 @@ class Ai::Recaptcha::SolverService < BaseService
                   tile.save(tile_file.name)  # Save as PNG for lossless quality
                   tile_path = tile_file.name
 
-              preds = model(tile_path, conf=0.1)[0]
+              preds = model(tile_path, conf=0.01)[0]
 
-              names = preds.names
-              classes = preds.boxes.cls.tolist() if preds.boxes.cls is not None else []
+              # Get top-5 class indices
+              # top5_ids = preds.probs.top5  # List of integers
+              probs_tensor = preds.probs.data
+              top15_ids = torch.topk(probs_tensor, 15).indices.tolist()
+              names = preds.names          # List or dict of class names
+              # Check if keyword is in any of the top-5 class names
+              found = any(
+                keyword in names[class_id].lower().replace("_", " ")
+                for class_id in top15_ids
+              )
+
+              # names = preds.names
+              # classes = preds.boxes.cls.tolist() if preds.boxes.cls is not None else []
               # ipdb.set_trace()
 
-              found = any(keyword in names[int(cls)].lower() for cls in classes)
+              # found = any(keyword in names[int(cls)].lower() for cls in classes)
               results.append(found)
 
               os.remove(tile_path)
