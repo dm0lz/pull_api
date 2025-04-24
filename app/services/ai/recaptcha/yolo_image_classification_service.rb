@@ -1,4 +1,4 @@
-class Ai::Recaptcha::ImageClassificationService < BaseService
+class Ai::Recaptcha::YoloImageClassificationService < BaseService
   def initialize(img_base64:, tiles_nb:, keyword:)
     @img_base64 = img_base64
     @tiles_nb = tiles_nb
@@ -20,12 +20,13 @@ class Ai::Recaptcha::ImageClassificationService < BaseService
       import json
       import math
       from PIL import Image
-      from transformers import CLIPProcessor, CLIPModel
-      import torch
+      from ultralytics import YOLO
       import logging
+      import torch
       import ipdb
+      from sentence_transformers import SentenceTransformer, util
 
-      logging.getLogger("transformers").setLevel(logging.ERROR)
+      logging.getLogger("ultralytics").setLevel(logging.CRITICAL)
 
       # Input vars
       img_base64 = "#{@img_base64}"
@@ -34,23 +35,25 @@ class Ai::Recaptcha::ImageClassificationService < BaseService
 
       # Decode the base64 image
       image_data = base64.b64decode(img_base64)
+
       with tempfile.NamedTemporaryFile(suffix=".png", delete=False) as temp_file:
           temp_file.write(image_data)
           temp_path = temp_file.name
 
-      # Open and resize image
+      # Open and resize the image to a larger resolution
       image = Image.open(temp_path)
       large_resolution = 1920
       image = image.resize((large_resolution, large_resolution), Image.Resampling.LANCZOS)
       width, height = image.size
 
+      # Calculate grid dimensions
       cols = rows = int(math.sqrt(tiles_nb))
       tile_width = width // cols
       tile_height = height // rows
 
-      # Load CLIP
-      model = CLIPModel.from_pretrained("openai/clip-vit-large-patch14")
-      processor = CLIPProcessor.from_pretrained("openai/clip-vit-large-patch14")
+      model = YOLO("yolov8x-cls.pt")
+      embedder = SentenceTransformer("sentence-transformers/all-mpnet-base-v2")
+      keyword_embedding = embedder.encode(keyword, convert_to_tensor=True)
 
       results = []
 
@@ -61,19 +64,22 @@ class Ai::Recaptcha::ImageClassificationService < BaseService
               right = left + tile_width
               bottom = top + tile_height
               tile = image.crop((left, top, right, bottom))
+              tile = tile.resize((640, 640), Image.Resampling.LANCZOS)
 
               with tempfile.NamedTemporaryFile(suffix=".png", delete=False) as tile_file:
                   tile.save(tile_file.name)
                   tile_path = tile_file.name
 
-              labels = ["car", "crosswalk", "traffic light", "bus", "bicycle", "motorcycle", "fire hydrant", "stairs"]
-              if keyword not in labels:
-                  labels.append(keyword)
+              preds = model(tile_path, conf=0.4)[0]
+              names = preds.names
+              probs_tensor = preds.probs.data
+              top15_ids = torch.topk(probs_tensor, 15).indices.tolist()
 
-              inputs = processor(text=labels, images=tile, return_tensors="pt", padding=True)
-              outputs = model(**inputs)
-              probs = outputs.logits_per_image.softmax(dim=1)
-              found = (probs[0][labels.index(keyword)].item() >= 0.5)
+              labels = [names[class_id].replace("_", " ") for class_id in top15_ids]
+              label_embeddings = embedder.encode(labels, convert_to_tensor=True)
+
+              similarities = util.pytorch_cos_sim(keyword_embedding, label_embeddings)[0]
+              found = torch.max(similarities).item() >= 0.4
               # ipdb.set_trace()
 
               results.append(found)

@@ -29,21 +29,6 @@ class Api::RecaptchaSolverController < Api::V1::BaseController
   end
 
   def cleaned_keyword
-    keyword = recaptcha_solver_params[:keyword].singularize.sub(/\Aan? /, "").downcase
-    dict[keyword] || keyword
-  end
-
-  def dict
-    {
-      "taxi" => "van",
-      "car" => "van",
-      "crosswalk" => "street",
-      "bus" => "van",
-      "truck" => "van",
-      "fire hydrant" => "pedestal",
-      "motorcycle" => "moto",
-      "bicycle" => "cycle",
-      "stair" => "bannister"
-    }
+    recaptcha_solver_params[:keyword].downcase
   end
 end

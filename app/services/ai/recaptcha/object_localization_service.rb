@@ -6,7 +6,7 @@ class Ai::Recaptcha::ObjectLocalizationService < BaseService
   end
 
   def call
-    puts python_script
+    puts(python_script)
     RuntimeExecutor::PythonService.new.call(python_script)
   end
 
@@ -18,73 +18,66 @@ class Ai::Recaptcha::ObjectLocalizationService < BaseService
       import tempfile
       import os
       import json
-      import sys
-      import contextlib
-      from PIL import Image
-      from ultralytics import YOLO
-      import logging
       import math
-      import ipdb
+      from PIL import Image
+      import torch
+      from transformers import AutoProcessor, GroundingDinoForObjectDetection
 
-      logging.getLogger("ultralytics").setLevel(logging.CRITICAL)
-
-      # Input vars
       img_base64 = "#{@img_base64}"
       tiles_nb = int(#{@tiles_nb})
       keyword = "#{@keyword}".lower()
 
-      def get_tiles_with_object(image_path, tiles_nb, keyword, model_path="yolov8x.pt", conf_threshold=0.5):
-          keyword = keyword.lower()
-          model = YOLO(model_path)
-
-          # Run YOLO detection
-          results = model(image_path, conf=conf_threshold)[0]
-          names = results.names
-          boxes = results.boxes
-
-          # Init result list
-          tile_flags = [False] * tiles_nb
-
-          if boxes is None or boxes.cls is None:
-              return tile_flags
-
-          # Open image and get dimensions
-          image = Image.open(image_path)
-          width, height = image.size
-
-          # Determine grid size
-          grid_size = int(math.sqrt(tiles_nb))
-          tile_w = width / grid_size
-          tile_h = height / grid_size
-
-          for i, cls_id in enumerate(boxes.cls.tolist()):
-              label = names[int(cls_id)].lower().replace("_", " ")
-              if keyword not in label:
-                  continue
-
-              x1, y1, x2, y2 = boxes.xyxy[i].tolist()
-
-              # Compute tile indices for the bounding box
-              col_start = int(x1 // tile_w)
-              col_end = int(x2 // tile_w)
-              row_start = int(y1 // tile_h)
-              row_end = int(y2 // tile_h)
-
-              for row in range(row_start, row_end + 1):
-                  for col in range(col_start, col_end + 1):
-                      tile_index = row * grid_size + col
-                      if 0 <= tile_index < tiles_nb:
-                          tile_flags[tile_index] = True
-
-          return tile_flags
-
+      # Decode base64 image
       image_data = base64.b64decode(img_base64)
       with tempfile.NamedTemporaryFile(suffix=".png", delete=False) as temp_file:
           temp_file.write(image_data)
           temp_path = temp_file.name
 
-      tiles = get_tiles_with_object(temp_path, tiles_nb, keyword)
-      print(json.dumps(tiles), flush=True)
+      image = Image.open(temp_path).convert("RGB")
+      width, height = image.size
+      grid_size = int(math.sqrt(tiles_nb))
+      tile_w = width / grid_size
+      tile_h = height / grid_size
+
+      # Load processor and model
+      processor = AutoProcessor.from_pretrained("IDEA-Research/grounding-dino-base")
+      model = GroundingDinoForObjectDetection.from_pretrained("IDEA-Research/grounding-dino-base")
+
+      inputs = processor(images=image, text=keyword, return_tensors="pt")
+      outputs = model(**inputs)
+
+      target_sizes = torch.tensor([image.size[::-1]])
+      results = processor.image_processor.post_process_object_detection(
+          outputs, threshold=0.1, target_sizes=target_sizes
+      )[0]
+
+      tile_flags = [False] * tiles_nb
+
+      for score, label_id, box in zip(results["scores"], results["labels"], results["boxes"]):
+          x1, y1, x2, y2 = box.tolist()
+
+          for row in range(grid_size):
+              for col in range(grid_size):
+                  tile_index = row * grid_size + col
+                  tile_x1 = col * tile_w
+                  tile_y1 = row * tile_h
+                  tile_x2 = tile_x1 + tile_w
+                  tile_y2 = tile_y1 + tile_h
+
+                  # Compute intersection
+                  inter_x1 = max(x1, tile_x1)
+                  inter_y1 = max(y1, tile_y1)
+                  inter_x2 = min(x2, tile_x2)
+                  inter_y2 = min(y2, tile_y2)
+
+                  inter_area = max(0, inter_x2 - inter_x1) * max(0, inter_y2 - inter_y1)
+
+                  # Mark as True if there's any overlap
+                  if inter_area > 0:
+                      tile_flags[tile_index] = True
+
+      os.remove(temp_path)
+      print(json.dumps(tile_flags), flush=True)
     PYTHON
   end
 end
