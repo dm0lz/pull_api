@@ -28,6 +28,7 @@ RUN apt-get update -qq && \
     libgbm1\
     libxkbcommon0\
     libasound2\
+    libgl1 \
     libatspi2.0-0 && \
     rm -rf /var/lib/apt/lists /var/cache/apt/archives
 

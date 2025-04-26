@@ -71,7 +71,7 @@ class Ai::Recaptcha::ImageClassificationService < BaseService
               inputs = processor(text=labels, images=tile, return_tensors="pt", padding=True)
               outputs = model(**inputs)
               probs = outputs.logits_per_image.softmax(dim=1)
-              found = (probs[0][labels.index(keyword)].item() >= 0.5)
+              found = (probs[0][labels.index(keyword)].item() >= 0.4)
               # ipdb.set_trace()
 
               results.append(found)
