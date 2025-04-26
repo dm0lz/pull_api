@@ -1,26 +1,30 @@
 class Api::RecaptchaSolverController < Api::V1::BaseController
+  after_action :record_request
   def image_classification_challenge
-    @solution = Ai::Recaptcha::ImageClassificationService.new(
+    @solver = Ai::Recaptcha::ImageClassificationService.new(
       img_base64: recaptcha_solver_params[:img_base64],
       tiles_nb: recaptcha_solver_params[:tiles_nb],
       keyword: cleaned_keyword
-    ).call
+    )
+    @solution = @solver.call
   end
 
   def images_classification_challenge
-    @solution = Ai::Recaptcha::ImagesClassificationService.new(
+    @solver = Ai::Recaptcha::ImagesClassificationService.new(
       base64_images: recaptcha_solver_params[:base64_images],
       tiles_nb: recaptcha_solver_params[:tiles_nb],
       keyword: cleaned_keyword
-    ).call
+    )
+    @solution = @solver.call
   end
 
   def object_localization_challenge
-    @solution = Ai::Recaptcha::ObjectLocalizationService.new(
+    @solver = Ai::Recaptcha::ObjectLocalizationService.new(
       img_base64: recaptcha_solver_params[:img_base64],
       tiles_nb: recaptcha_solver_params[:tiles_nb],
-      keyword: cleaned_keyword
-    ).call
+      keyword: recaptcha_solver_params[:keyword]
+    )
+    @solution = @solver.call
   end
 
   private
@@ -29,6 +33,17 @@ class Api::RecaptchaSolverController < Api::V1::BaseController
   end
 
   def cleaned_keyword
-    recaptcha_solver_params[:keyword].downcase
+    recaptcha_solver_params[:keyword].singularize.sub(/\Aan? /, "").downcase
+  end
+
+  def record_request
+    RecaptchaChallenge.create!(
+      img_base64: recaptcha_solver_params[:img_base64],
+      base64_images: recaptcha_solver_params[:base64_images],
+      tiles_nb: recaptcha_solver_params[:tiles_nb],
+      keyword: cleaned_keyword,
+      challenge: params[:action],
+      python_script: @solver.python_script,
+    )
   end
 end

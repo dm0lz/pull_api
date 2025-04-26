@@ -10,8 +10,6 @@ class Ai::Recaptcha::ImageClassificationService < BaseService
     RuntimeExecutor::PythonService.new.call(python_script)
   end
 
-  private
-
   def python_script
     <<-PYTHON
       import base64
@@ -66,7 +64,7 @@ class Ai::Recaptcha::ImageClassificationService < BaseService
                   tile.save(tile_file.name)
                   tile_path = tile_file.name
 
-              labels = ["car", "crosswalk", "traffic light", "bus", "bicycle", "motorcycle", "fire hydrant", "stairs"]
+              labels = ["car", "crosswalk", "traffic light", "bus", "bicycle", "motorcycle", "fire hydrant", "stair"]
               if keyword not in labels:
                   labels.append(keyword)
 

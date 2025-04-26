@@ -10,8 +10,6 @@ class Ai::Recaptcha::ImagesClassificationService < BaseService
     RuntimeExecutor::PythonService.new.call(python_script)
   end
 
-  private
-
   def python_script
     base64_images_json = @base64_images.to_json.gsub('"', '\"')
     <<-PYTHON
