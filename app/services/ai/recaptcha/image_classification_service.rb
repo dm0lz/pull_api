@@ -6,8 +6,11 @@ class Ai::Recaptcha::ImageClassificationService < BaseService
   end
 
   def call
-    puts python_script
-    RuntimeExecutor::PythonService.new.call(python_script)
+    mutex = Mutex.new
+    mutex.synchronize do
+      puts python_script
+      RuntimeExecutor::PythonService.new.call(python_script)
+    end
   end
 
   def python_script
@@ -71,7 +74,7 @@ class Ai::Recaptcha::ImageClassificationService < BaseService
               inputs = processor(text=labels, images=tile, return_tensors="pt", padding=True)
               outputs = model(**inputs)
               probs = outputs.logits_per_image.softmax(dim=1)
-              found = (probs[0][labels.index(keyword)].item() >= 0.4)
+              found = (probs[0][labels.index(keyword)].item() >= 0.5)
               # ipdb.set_trace()
 
               results.append(found)

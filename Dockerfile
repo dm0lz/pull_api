@@ -30,6 +30,7 @@ RUN apt-get update -qq && \
     libasound2\
     libgl1 \
     ffmpeg \
+    vim \
     libatspi2.0-0 && \
     rm -rf /var/lib/apt/lists /var/cache/apt/archives
 
@@ -102,6 +103,9 @@ RUN groupadd --system --gid 1000 rails && \
 USER 1000:1000
 
 # RUN uv sync
+# RUN uv run /rails/python_scripts/recaptcha_audio_challenge.py
+# RUN uv run /rails/python_scripts/recaptcha_image_classification_challenge.py
+# RUN uv run /rails/python_scripts/recaptcha_object_localization_challenge.py
 
 # Entrypoint prepares the database.
 ENTRYPOINT ["/rails/bin/docker-entrypoint"]

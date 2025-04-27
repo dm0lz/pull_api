@@ -6,8 +6,11 @@ class Ai::Recaptcha::ObjectLocalizationService < BaseService
   end
 
   def call
-    puts(python_script)
-    RuntimeExecutor::PythonService.new.call(python_script)
+    mutex = Mutex.new
+    mutex.synchronize do
+      puts(python_script)
+      RuntimeExecutor::PythonService.new.call(python_script)
+    end
   end
 
   def python_script
@@ -47,7 +50,7 @@ class Ai::Recaptcha::ObjectLocalizationService < BaseService
 
       target_sizes = torch.tensor([image.size[::-1]])
       results = processor.image_processor.post_process_object_detection(
-          outputs, threshold=0.25, target_sizes=target_sizes
+          outputs, threshold=0.15, target_sizes=target_sizes
       )[0]
 
       tile_flags = [False] * tiles_nb

@@ -4,7 +4,11 @@ class Ai::SpeechToText::TranscriptionService < BaseService
   end
 
   def call
-    RuntimeExecutor::PythonService.new.call(python_script)
+    mutex = Mutex.new
+    mutex.synchronize do
+      puts(python_script)
+      RuntimeExecutor::PythonService.new.call(python_script)
+    end
   end
 
   private
