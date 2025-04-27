@@ -29,7 +29,7 @@ class Ai::SpeechToText::TranscriptionService < BaseService
               temp_audio.write(chunk)
           temp_path = temp_audio.name
 
-      pipe = pipeline("automatic-speech-recognition", model="openai/whisper-large-v3-turbo")
+      pipe = pipeline("automatic-speech-recognition", model="openai/whisper-small")
       output = pipe(temp_path)
       os.remove(temp_path)
 
