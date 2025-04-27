@@ -1,4 +1,6 @@
 class Ai::Recaptcha::ObjectLocalizationService < BaseService
+  MUTEX = Mutex.new
+
   def initialize(img_base64:, tiles_nb:, keyword:)
     @img_base64 = img_base64
     @tiles_nb = tiles_nb
@@ -6,9 +8,8 @@ class Ai::Recaptcha::ObjectLocalizationService < BaseService
   end
 
   def call
-    mutex = Mutex.new
-    mutex.synchronize do
-      puts(python_script)
+    MUTEX.synchronize do
+      puts(python_script) # for debugging
       RuntimeExecutor::PythonService.new.call(python_script)
     end
   end
@@ -23,7 +24,6 @@ class Ai::Recaptcha::ObjectLocalizationService < BaseService
       from PIL import Image, ImageDraw
       import torch
       from transformers import AutoProcessor, GroundingDinoForObjectDetection
-      import ipdb
 
       img_base64 = "#{@img_base64}"
       tiles_nb = int(#{@tiles_nb})
@@ -35,87 +35,69 @@ class Ai::Recaptcha::ObjectLocalizationService < BaseService
           temp_file.write(image_data)
           temp_path = temp_file.name
 
-      image = Image.open(temp_path).convert("RGB")
-      width, height = image.size
+      # Load image
+      base_image = Image.open(temp_path).convert("RGB")
+      width, height = base_image.size
       grid_size = int(math.sqrt(tiles_nb))
-      tile_w = width / grid_size
-      tile_h = height / grid_size
+      tile_w, tile_h = width / grid_size, height / grid_size
 
-      # Load model and processor
+      # Load model
       processor = AutoProcessor.from_pretrained("IDEA-Research/grounding-dino-base")
-      model = GroundingDinoForObjectDetection.from_pretrained("IDEA-Research/grounding-dino-base")
+      model = GroundingDinoForObjectDetection.from_pretrained("IDEA-Research/grounding-dino-base").to(
+          "cuda" if torch.cuda.is_available() else "cpu"
+      )
 
-      device = "cuda" if torch.cuda.is_available() else "cpu"
-      model = model.to(device)
+      def detect(box_threshold, text_threshold):
+          image = base_image.copy()
+          inputs = processor(images=image, text=keyword, return_tensors="pt").to(model.device)
+          with torch.no_grad():
+              outputs = model(**inputs)
+          results = processor.post_process_grounded_object_detection(
+              outputs=outputs,
+              input_ids=inputs.input_ids,
+              box_threshold=box_threshold,
+              text_threshold=text_threshold,
+              target_sizes=[image.size[::-1]]
+          )[0]
 
-      # Prepare input
-      inputs = processor(images=image, text=keyword, return_tensors="pt").to(device)
+          tile_flags = [False] * tiles_nb
+          overlay = Image.new("RGBA", image.size, (0, 0, 0, 0))
+          draw_grid = ImageDraw.Draw(image)
+          draw_overlay = ImageDraw.Draw(overlay)
 
-      with torch.no_grad():
-          outputs = model(**inputs)
+          for i in range(1, grid_size):
+              draw_grid.line([(i * tile_w, 0), (i * tile_w, height)], fill="white", width=1)
+              draw_grid.line([(0, i * tile_h), (width, i * tile_h)], fill="white", width=1)
 
-      # Use post_process_grounded_object_detection instead
-      results = processor.post_process_grounded_object_detection(
-          outputs=outputs,
-          input_ids=inputs.input_ids,
-          threshold=0.15,
-          text_threshold=0.1,
-          target_sizes=[image.size[::-1]]
-      )[0]
+          for box in results["boxes"]:
+              x1, y1, x2, y2 = box.tolist()
+              draw_grid.rectangle([x1, y1, x2, y2], outline="red", width=3)
+              for row in range(grid_size):
+                  for col in range(grid_size):
+                      idx = row * grid_size + col
+                      tx1, ty1 = col * tile_w, row * tile_h
+                      tx2, ty2 = tx1 + tile_w, ty1 + tile_h
+                      inter_x1, inter_y1 = max(x1, tx1), max(y1, ty1)
+                      inter_x2, inter_y2 = min(x2, tx2), min(y2, ty2)
+                      if (max(0, inter_x2 - inter_x1) * max(0, inter_y2 - inter_y1)) / (tile_w * tile_h) > 0.15:
+                          tile_flags[idx] = True
+                          draw_overlay.rectangle([tx1, ty1, tx2, ty2], fill=(0, 255, 0, 100))
 
-      tile_flags = [False] * tiles_nb
+          return tile_flags, Image.alpha_composite(image.convert("RGBA"), overlay)
 
-      # Prepare overlay for green highlight
-      overlay = Image.new("RGBA", image.size, (0, 0, 0, 0))
-      overlay_draw = ImageDraw.Draw(overlay)
-      image = image.convert("RGBA")
-      draw = ImageDraw.Draw(image)
-
-      # Draw grid in white
-      for i in range(1, grid_size):
-          x = i * tile_w
-          draw.line([(x, 0), (x, height)], fill="white", width=1)
-          y = i * tile_h
-          draw.line([(0, y), (width, y)], fill="white", width=1)
-
-      # Loop through all detected boxes
-      for score, label, box in zip(results["scores"], results["labels"], results["boxes"]):
-          x1, y1, x2, y2 = box.tolist()
-
-          # Draw bounding box (red outline)
-          draw.rectangle([x1, y1, x2, y2], outline="red", width=3)
-
-          # Check all grid tiles for intersection
-          for row in range(grid_size):
-              for col in range(grid_size):
-                  tile_index = row * grid_size + col
-                  tile_x1 = col * tile_w
-                  tile_y1 = row * tile_h
-                  tile_x2 = tile_x1 + tile_w
-                  tile_y2 = tile_y1 + tile_h
-
-                  inter_x1 = max(x1, tile_x1)
-                  inter_y1 = max(y1, tile_y1)
-                  inter_x2 = min(x2, tile_x2)
-                  inter_y2 = min(y2, tile_y2)
-                  inter_area = max(0, inter_x2 - inter_x1) * max(0, inter_y2 - inter_y1)
-
-                  tile_area = tile_w * tile_h
-                  if inter_area / tile_area > 0.15:
-                      tile_flags[tile_index] = True
-                      overlay_draw.rectangle(
-                          [tile_x1, tile_y1, tile_x2, tile_y2],
-                          fill=(0, 255, 0, 100)
-                      )
-
-      # Composite overlay onto image
-      image = Image.alpha_composite(image, overlay)
+      # Threshold search
+      box_thresh, text_thresh = 0.3, 0.2
+      while box_thresh >= 0.05 and text_thresh >= 0.05:
+          tile_flags, final_image = detect(box_thresh, text_thresh)
+          if any(tile_flags):
+              break
+          box_thresh -= 0.05
+          text_thresh -= 0.05
 
       # Save debug image
       vis_path = temp_path.replace(".png", "_boxes.png")
-      image.save(vis_path)
+      final_image.save(vis_path)
 
-      # ipdb.set_trace()
       os.remove(temp_path)
       os.remove(vis_path)
 

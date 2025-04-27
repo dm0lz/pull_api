@@ -6,7 +6,7 @@ class Api::RecaptchaSolverController < Api::V1::BaseController
       tiles_nb: recaptcha_solver_params[:tiles_nb],
       keyword: cleaned_keyword
     )
-    @solution = @solver.call
+    @image_classification_challenge_solution = @solver.call
   end
 
   def images_classification_challenge
@@ -15,7 +15,7 @@ class Api::RecaptchaSolverController < Api::V1::BaseController
       tiles_nb: recaptcha_solver_params[:tiles_nb],
       keyword: cleaned_keyword
     )
-    @solution = @solver.call
+    @images_classification_challenge_solution = @solver.call
   end
 
   def object_localization_challenge
@@ -24,7 +24,7 @@ class Api::RecaptchaSolverController < Api::V1::BaseController
       tiles_nb: recaptcha_solver_params[:tiles_nb],
       keyword: recaptcha_solver_params[:keyword]
     )
-    @solution = @solver.call
+    @object_localization_challenge_solution = @solver.call
   end
 
   private

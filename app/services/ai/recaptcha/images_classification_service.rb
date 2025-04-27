@@ -1,4 +1,5 @@
 class Ai::Recaptcha::ImagesClassificationService < BaseService
+  MUTEX = Mutex.new
   def initialize(base64_images:, tiles_nb:, keyword:)
     @base64_images = base64_images
     @tiles_nb = tiles_nb
@@ -6,8 +7,7 @@ class Ai::Recaptcha::ImagesClassificationService < BaseService
   end
 
   def call
-    mutex = Mutex.new
-    mutex.synchronize do
+    MUTEX.synchronize do
       puts python_script
       RuntimeExecutor::PythonService.new.call(python_script)
     end
