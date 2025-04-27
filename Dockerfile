@@ -29,6 +29,7 @@ RUN apt-get update -qq && \
     libxkbcommon0\
     libasound2\
     libgl1 \
+    ffmpeg \
     libatspi2.0-0 && \
     rm -rf /var/lib/apt/lists /var/cache/apt/archives
 
