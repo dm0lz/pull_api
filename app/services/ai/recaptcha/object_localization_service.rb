@@ -45,12 +45,22 @@ class Ai::Recaptcha::ObjectLocalizationService < BaseService
       processor = AutoProcessor.from_pretrained("IDEA-Research/grounding-dino-base")
       model = GroundingDinoForObjectDetection.from_pretrained("IDEA-Research/grounding-dino-base")
 
-      inputs = processor(images=image, text=keyword, return_tensors="pt")
-      outputs = model(**inputs)
+      device = "cuda" if torch.cuda.is_available() else "cpu"
+      model = model.to(device)
 
-      target_sizes = torch.tensor([image.size[::-1]])
-      results = processor.image_processor.post_process_object_detection(
-          outputs, threshold=0.15, target_sizes=target_sizes
+      # Prepare input
+      inputs = processor(images=image, text=keyword, return_tensors="pt").to(device)
+
+      with torch.no_grad():
+          outputs = model(**inputs)
+
+      # Use post_process_grounded_object_detection instead
+      results = processor.post_process_grounded_object_detection(
+          outputs=outputs,
+          input_ids=inputs.input_ids,
+          threshold=0.15,
+          text_threshold=0.1,
+          target_sizes=[image.size[::-1]]
       )[0]
 
       tile_flags = [False] * tiles_nb
@@ -69,7 +79,7 @@ class Ai::Recaptcha::ObjectLocalizationService < BaseService
           draw.line([(0, y), (width, y)], fill="white", width=1)
 
       # Loop through all detected boxes
-      for score, label_id, box in zip(results["scores"], results["labels"], results["boxes"]):
+      for score, label, box in zip(results["scores"], results["labels"], results["boxes"]):
           x1, y1, x2, y2 = box.tolist()
 
           # Draw bounding box (red outline)
@@ -105,10 +115,7 @@ class Ai::Recaptcha::ObjectLocalizationService < BaseService
       vis_path = temp_path.replace(".png", "_boxes.png")
       image.save(vis_path)
 
-      # Optional: print debug image path
-      # print("Saved visualization to:", vis_path, flush=True)
       # ipdb.set_trace()
-
       os.remove(temp_path)
       os.remove(vis_path)
 
