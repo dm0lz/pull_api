@@ -24,10 +24,11 @@ class Ai::Recaptcha::ObjectLocalizationService < BaseService
       from PIL import Image, ImageDraw
       import torch
       from transformers import AutoProcessor, GroundingDinoForObjectDetection
+      import ipdb
 
       img_base64 = "#{@img_base64}"
       tiles_nb = int(#{@tiles_nb})
-      keyword = "#{@keyword}".lower()
+      keyword = "a #{@keyword} or #{@keyword.pluralize}".lower()
 
       # Decode base64 image
       image_data = base64.b64decode(img_base64)
@@ -55,7 +56,7 @@ class Ai::Recaptcha::ObjectLocalizationService < BaseService
           results = processor.post_process_grounded_object_detection(
               outputs=outputs,
               input_ids=inputs.input_ids,
-              box_threshold=box_threshold,
+              threshold=box_threshold,
               text_threshold=text_threshold,
               target_sizes=[image.size[::-1]]
           )[0]
@@ -87,17 +88,23 @@ class Ai::Recaptcha::ObjectLocalizationService < BaseService
 
       # Threshold search
       box_thresh, text_thresh = 0.3, 0.2
-      while box_thresh >= 0.05 and text_thresh >= 0.05:
+
+      while box_thresh >= 0.01 and text_thresh >= 0.01:
           tile_flags, final_image = detect(box_thresh, text_thresh)
           if any(tile_flags):
               break
-          box_thresh -= 0.05
-          text_thresh -= 0.05
+          if box_thresh > 0.05:
+              box_thresh -= 0.05
+              text_thresh -= 0.05
+          else:
+              box_thresh -= 0.01
+              text_thresh -= 0.01
 
       # Save debug image
       vis_path = temp_path.replace(".png", "_boxes.png")
       final_image.save(vis_path)
 
+      # ipdb.set_trace()
       os.remove(temp_path)
       os.remove(vis_path)
 

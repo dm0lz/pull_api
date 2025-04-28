@@ -19,10 +19,11 @@ class Api::RecaptchaSolverController < Api::V1::BaseController
   end
 
   def object_localization_challenge
+    # @solver = Ai::Recaptcha::ImageSegmentationService.new(
     @solver = Ai::Recaptcha::ObjectLocalizationService.new(
       img_base64: recaptcha_solver_params[:img_base64],
       tiles_nb: recaptcha_solver_params[:tiles_nb],
-      keyword: recaptcha_solver_params[:keyword]
+      keyword: cleaned_keyword
     )
     @object_localization_challenge_solution = @solver.call
   end
