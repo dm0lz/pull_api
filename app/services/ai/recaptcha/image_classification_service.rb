@@ -50,8 +50,8 @@ class Ai::Recaptcha::ImageClassificationService < BaseService
       tile_height = height // rows
 
       # Load CLIP
-      model = CLIPModel.from_pretrained("openai/clip-vit-large-patch14")
-      processor = CLIPProcessor.from_pretrained("openai/clip-vit-large-patch14")
+      model = CLIPModel.from_pretrained("openai/clip-vit-base-patch32")
+      processor = CLIPProcessor.from_pretrained("openai/clip-vit-base-patch32")
 
       results = []
 

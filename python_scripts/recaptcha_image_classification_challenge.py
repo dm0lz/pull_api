@@ -33,8 +33,8 @@ tile_width = width // cols
 tile_height = height // rows
 
 # Load CLIP
-model = CLIPModel.from_pretrained("openai/clip-vit-large-patch14")
-processor = CLIPProcessor.from_pretrained("openai/clip-vit-large-patch14")
+model = CLIPModel.from_pretrained("openai/clip-vit-base-patch32")
+processor = CLIPProcessor.from_pretrained("openai/clip-vit-base-patch32")
 
 results = []
 
@@ -50,14 +50,23 @@ for row in range(rows):
             tile.save(tile_file.name)
             tile_path = tile_file.name
 
-        labels = ["car", "crosswalk", "traffic light", "bus", "bicycle", "motorcycle", "fire hydrant", "stair"]
+        labels = [
+            "car",
+            "crosswalk",
+            "traffic light",
+            "bus",
+            "bicycle",
+            "motorcycle",
+            "fire hydrant",
+            "stair",
+        ]
         if keyword not in labels:
             labels.append(keyword)
 
         inputs = processor(text=labels, images=tile, return_tensors="pt", padding=True)
         outputs = model(**inputs)
         probs = outputs.logits_per_image.softmax(dim=1)
-        found = (probs[0][labels.index(keyword)].item() >= 0.5)
+        found = probs[0][labels.index(keyword)].item() >= 0.5
         # ipdb.set_trace()
 
         results.append(found)

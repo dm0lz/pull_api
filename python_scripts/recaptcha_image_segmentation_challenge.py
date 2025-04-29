@@ -33,7 +33,7 @@ grid_size = int(math.sqrt(tiles_nb))
 tile_w, tile_h = width / grid_size, height / grid_size
 
 # Load models
-processor_dino = AutoProcessor.from_pretrained("IDEA-Research/grounding-dino-base")
+processor_dino = AutoProcessor.from_pretrained("IDEA-Research/grounding-dino-tiny")
 model_dino = GroundingDinoForObjectDetection.from_pretrained(
     "IDEA-Research/grounding-dino-base"
 ).to("cuda" if torch.cuda.is_available() else "cpu")

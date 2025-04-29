@@ -29,7 +29,7 @@ class Ai::Recaptcha::ImageSegmentationService < BaseService
 
       # Setup
       tiles_nb = #{@tiles_nb}
-      keyword = "a #{@keyword} or #{@keyword.pluralize}".lower()
+      keyword = "one #{@keyword} or many #{@keyword.pluralize}".lower()
 
       # Decode image
       image_data = base64.b64decode("#{@img_base64}")
@@ -44,7 +44,7 @@ class Ai::Recaptcha::ImageSegmentationService < BaseService
       tile_w, tile_h = width / grid_size, height / grid_size
 
       # Load models
-      processor_dino = AutoProcessor.from_pretrained("IDEA-Research/grounding-dino-base")
+      processor_dino = AutoProcessor.from_pretrained("IDEA-Research/grounding-dino-tiny")
       model_dino = GroundingDinoForObjectDetection.from_pretrained(
           "IDEA-Research/grounding-dino-base"
       ).to("cuda" if torch.cuda.is_available() else "cpu")

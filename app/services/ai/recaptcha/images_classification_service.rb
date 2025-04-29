@@ -34,8 +34,8 @@ class Ai::Recaptcha::ImagesClassificationService < BaseService
       base64_images = json.loads("#{base64_images_json}")
       keyword = "#{@keyword}".lower()
 
-      model = CLIPModel.from_pretrained("openai/clip-vit-large-patch14")
-      processor = CLIPProcessor.from_pretrained("openai/clip-vit-large-patch14")
+      model = CLIPModel.from_pretrained("openai/clip-vit-base-patch32")
+      processor = CLIPProcessor.from_pretrained("openai/clip-vit-base-patch32")
 
       base64_images = sorted(base64_images, key=lambda x: x["index"])
       results = []
