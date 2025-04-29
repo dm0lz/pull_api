@@ -1,4 +1,7 @@
 class Api::RecaptchaSolverController < Api::V1::BaseController
+  @@mutex = Mutex.new
+
+  around_action :synchronize_solver
   after_action :record_request
   def image_classification_challenge
     @solver = Ai::Recaptcha::ImageClassificationService.new(
@@ -19,7 +22,8 @@ class Api::RecaptchaSolverController < Api::V1::BaseController
   end
 
   def object_localization_challenge
-    @solver = Ai::Recaptcha::ImageSegmentationService.new(
+    @solver = Ai::Recaptcha::YoloObjectLocalizationService.new(
+      # @solver = Ai::Recaptcha::ImageSegmentationService.new(
       # @solver = Ai::Recaptcha::ObjectLocalizationService.new(
       img_base64: recaptcha_solver_params[:img_base64],
       tiles_nb: recaptcha_solver_params[:tiles_nb],
@@ -46,5 +50,11 @@ class Api::RecaptchaSolverController < Api::V1::BaseController
       challenge: params[:action],
       python_script: @solver.python_script,
     )
+  end
+
+  def synchronize_solver
+    @@mutex.synchronize do
+      yield
+    end
   end
 end

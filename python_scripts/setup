@@ -1,0 +1,4 @@
+#!/bin/bash
+uv run python_scripts/recaptcha_audio_challenge.py
+uv run python_scripts/recaptcha_image_classification_challenge.py
+uv run python_scripts/recaptcha_yolo_object_localization_challenge.py

@@ -10,8 +10,6 @@ class Ai::Recaptcha::YoloObjectLocalizationService < BaseService
     RuntimeExecutor::PythonService.new.call(python_script)
   end
 
-  private
-
   def python_script
     <<-PYTHON
       import base64
