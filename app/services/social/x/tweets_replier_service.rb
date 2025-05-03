@@ -56,10 +56,18 @@ class Social::X::TweetsReplierService < BaseService
             const textArea = await page.waitForSelector('[data-contents="true"]');
             await textArea.click();
             await textArea.fill("#{@payload}");
-            const tweetButton = await page.waitForSelector(
-              '[data-testid="tweetButtonInline"]'
-            );
-            await tweetButton.click();
+            // const tweetButton = await page.waitForSelector(
+            //   '[data-testid="tweetButtonInline"]'
+            // );
+            // await tweetButton.click();
+            await page.evaluate(() => {
+              const spans = document.querySelectorAll("span");
+              const tweetButton = Array.from(spans).find(
+                (span) => span.textContent.trim() === "Reply"
+              );
+              tweetButton.scrollIntoView();
+              tweetButton.click();
+            });
           } catch (error) {
             console.log(error);
           }

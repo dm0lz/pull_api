@@ -17,14 +17,12 @@
           <time datetime="<%= @post.created_at.strftime("%Y-%m-%d") %>">
             <%= @post.created_at.strftime("%B %-d, %Y") %>
           </time>
-          <span class="mx-2">·</span>
-          <span><%= pluralize(@post.body.split.count, "word") %></span>
         </div>
       </div>
 
       <%# Article content %>
       <div class="prose prose-lg prose-indigo mt-8 max-w-none">
-        <%= @post.body %>
+        <%= @post.body.html_safe %>
       </div>
 
       <%# Article footer %>

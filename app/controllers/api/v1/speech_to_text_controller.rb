@@ -1,7 +1,7 @@
 class Api::V1::SpeechToTextController < Api::V1::BaseController
-  # @summary Get search engine results
+  # @summary Speech to text transcription
   # @auth [bearer]
-  # @parameter url(query) [!String] The url of the audio file to transcribe
+  # @parameter audio_url(query) [!String] The url of the audio file to transcribe
   # @response Validation errors(401) [Hash{error: String}]
   # @response Validation errors(403) [Hash{error: String}]
   # @response Validation errors(422) [Hash{error: String}]
