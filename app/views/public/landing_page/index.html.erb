@@ -43,8 +43,8 @@
         <div class="h-12 w-12 bg-indigo-100 rounded-lg flex items-center justify-center mb-4">
           <i data-lucide="search" class="h-6 w-6 text-indigo-600"></i>
         </div>
-        <h3 class="text-xl font-semibold mb-2">SERP API</h3>
-        <p class="text-gray-600">Fetch search results from major search engines with structured data output.</p>
+        <h3 class="text-xl font-semibold mb-2">Speech-to-text API</h3>
+        <p class="text-gray-600">Perform speech to text transcription</p>
       </div>
 
       <!-- Feature Card 2 -->
@@ -106,7 +106,6 @@
       <div class="mt-8">
         <h3 class="text-xl font-semibold text-gray-900 mb-4">Endpoint Costs</h3>
         <ul class="space-y-3 text-gray-600">
-          <li class="flex justify-between"><span><a href="#serp_endpoint" data-endpoint="serp" class="open-accordion text-gray-400 hover:cursor-pointer hover:text-gray-600">Fetch Search Engine Results</a></span><span>1 credit</span></li>
           <li class="flex justify-between"><span><a href="#hf_inference_endpoint" data-endpoint="hf_inference" class="open-accordion text-gray-400 hover:cursor-pointer hover:text-gray-600">Perform Hugging Face Inference</a></span><span>3 credits</span></li>
           <li class="flex justify-between"><span><a href="#scrap_web_page_endpoint" data-endpoint="scrap_web_page" class="open-accordion text-gray-400 hover:cursor-pointer hover:text-gray-600">Scrape Web Page</a></span><span>1 credit</span></li>
           <li class="flex justify-between"><span><a href="#scrap_web_pages_endpoint" data-endpoint="scrap_web_pages" class="open-accordion text-gray-400 hover:cursor-pointer hover:text-gray-600">Scrape Multiple Pages</a></span><span>1 credit</span></li>
@@ -129,184 +128,6 @@
     <h2 class="text-3xl font-bold text-center mb-12">API Endpoints</h2>
     <div class="space-y-4">
       <!-- Web Scraping Endpoint -->
-      <div class="bg-white rounded-lg shadow-md" id="serp_endpoint">
-        <button class="toggle-accordion w-full px-6 py-4 text-left focus:outline-none hover:cursor-pointer" data-endpoint="serp">
-          <div class="flex items-center justify-between">
-            <div class="flex items-center space-x-2">
-              <i data-lucide="bot" class="h-5 w-5 text-indigo-600"></i>
-              <span class="text-lg font-semibold">Fetch SERP</span>
-            </div>
-            <i data-lucide="chevron-up" class="h-5 w-5 transform transition-transform"></i>
-          </div>
-        </button>
-        <div id="serp" class="px-6 pb-4">
-          <div class="prose max-w-none">
-            <div class="bg-gray-50 rounded-lg p-4 mb-8">
-              <p class="text-gray-600 mb-4">Fetch search engine results from multiple search engines including Google, DuckDuckGo, 
-                Yahoo, Bing, and Yandex. Get structured data with position rankings, titles, descriptions, 
-                and URLs.
-              </p>
-            </div>
-
-            <!-- Use Cases Section -->
-            <div class="mb-8">
-              <div class="flex items-center space-x-2 mb-4">
-                <svg class="h-5 w-5 text-indigo-600" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 7h-7a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h7a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2Z"/><path d="M16 13h.01"/><path d="M16 17h.01"/><path d="M10 7H3a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h7a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2Z"/><path d="M6 13h.01"/><path d="M6 17h.01"/></svg>
-                <h3 class="text-lg font-semibold text-gray-900">Use Cases</h3>
-              </div>
-              <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div class="bg-gray-50 rounded-lg p-4">
-                  <h4 class="font-medium text-gray-900 mb-2">SEO Analysis</h4>
-                  <p class="text-sm text-gray-600">Track search rankings and monitor competitor visibility across multiple search engines.</p>
-                </div>
-                <div class="bg-gray-50 rounded-lg p-4">
-                  <h4 class="font-medium text-gray-900 mb-2">Market Research</h4>
-                  <p class="text-sm text-gray-600">Gather insights about product placement and brand visibility in search results.</p>
-                </div>
-                <div class="bg-gray-50 rounded-lg p-4">
-                  <h4 class="font-medium text-gray-900 mb-2">Content Strategy</h4>
-                  <p class="text-sm text-gray-600">Analyze top-ranking content to inform your content creation and optimization efforts.</p>
-                </div>
-                <div class="bg-gray-50 rounded-lg p-4">
-                  <h4 class="font-medium text-gray-900 mb-2">Competitive Analysis</h4>
-                  <p class="text-sm text-gray-600">Monitor competitor rankings and identify opportunities in search results.</p>
-                </div>
-              </div>
-            </div>
-
-            <!-- Target Audience Section -->
-            <div class="mb-8">
-              <div class="flex items-center space-x-2 mb-4">
-                <svg class="h-5 w-5 text-indigo-600" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg>
-                <h3 class="text-lg font-semibold text-gray-900">Who is it for?</h3>
-              </div>
-              <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div class="bg-gray-50 rounded-lg p-4">
-                  <h4 class="font-medium text-gray-900 mb-2">Digital Marketers</h4>
-                  <p class="text-sm text-gray-600">Track campaign performance and optimize search visibility across multiple platforms.</p>
-                </div>
-                <div class="bg-gray-50 rounded-lg p-4">
-                  <h4 class="font-medium text-gray-900 mb-2">SEO Professionals</h4>
-                  <p class="text-sm text-gray-600">Monitor rankings and analyze search results for client websites.</p>
-                </div>
-                <div class="bg-gray-50 rounded-lg p-4">
-                  <h4 class="font-medium text-gray-900 mb-2">Content Creators</h4>
-                  <p class="text-sm text-gray-600">Research topics and analyze high-ranking content in their niche.</p>
-                </div>
-                <div class="bg-gray-50 rounded-lg p-4">
-                  <h4 class="font-medium text-gray-900 mb-2">Business Analysts</h4>
-                  <p class="text-sm text-gray-600">Gather market intelligence and track competitive positioning in search results.</p>
-                </div>
-              </div>
-            </div>
-
-            <!-- Parameters Section -->
-            <div class="bg-gray-50 rounded-lg p-4 mb-6">
-              <h3 class="text-lg font-semibold mb-3">Parameters</h3>
-              <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div>
-                  <h4 class="font-medium text-gray-700">search_engine</h4>
-                  <p class="text-sm text-gray-600">
-                    google | duckduckgo | yahoo | bing | yandex
-                  </p>
-                </div>
-                <div>
-                  <h4 class="font-medium text-gray-700">pages_number</h4>
-                  <p class="text-sm text-gray-600">Number of pages to fetch</p>
-                </div>
-                <div>
-                  <h4 class="font-medium text-gray-700">query</h4>
-                  <p class="text-sm text-gray-600">Search query string</p>
-                </div>
-              </div>
-            </div>
-            
-            <!-- Language Tabs -->
-            <div class="mb-4">
-              <div class="flex space-x-4 border-b">
-                <button class="switch-tab px-4 py-2 text-sm font-medium text-indigo-600 hover:text-indigo-600 border-b-2 border-indigo-500 hover:border-indigo-500 hover:cursor-pointer tab-button active" data-tab="curl">cURL</button>
-                <button class="switch-tab px-4 py-2 text-sm font-medium text-gray-600 hover:text-indigo-600 border-b-2 border-transparent hover:border-indigo-500 hover:cursor-pointer tab-button" data-tab="javascript">JavaScript</button>
-                <button class="switch-tab px-4 py-2 text-sm font-medium text-gray-600 hover:text-indigo-600 border-b-2 border-transparent hover:border-indigo-500 hover:cursor-pointer tab-button" data-tab="python">Python</button>
-                <button class="switch-tab px-4 py-2 text-sm font-medium text-gray-600 hover:text-indigo-600 border-b-2 border-transparent hover:border-indigo-500 hover:cursor-pointer tab-button" data-tab="ruby">Ruby</button>
-              </div>
-            </div>
-
-            <!-- Code Examples -->
-            <div id="curl" class="curl code-block">
-              <pre><code class="language-bash">curl -X GET "https://www.pullapi.com/api/v1/serp?search_engine=duckduckgo&pages_number=2&query=tesla" \
- -H 'accept: application/json'\
- -H 'authorization: Bearer YOUR_API_TOKEN'</code></pre>
-            </div>
-
-            <div id="javascript" class="javascript code-block hidden">
-              <pre><code class="language-javascript">const response = await fetch('https://www.pullapi.com/api/v1/serp?search_engine=duckduckgo&pages_number=2&query=tesla', {
-  method: 'GET',
-  headers: {
-    'accept': 'application/json',
-    'authorization': 'Bearer YOUR_API_TOKEN'
-  }
-});
-
-const data = await response.json();
-console.log(data);</code></pre>
-            </div>
-
-            <div id="ruby" class="ruby code-block hidden">
-              <pre><code class="language-ruby">require 'net/http'
-require 'uri'
-require 'json'
-
-uri = URI("https://www.pullapi.com/api/v1/serp?search_engine=duckduckgo&pages_number=2&query=tesla")
-request = Net::HTTP::Get.new(uri)
-request['Authorization'] = 'Bearer YOUR_API_TOKEN'  # Replace with your actual API token
-request['Accept'] = 'application/json'
-
-response = Net::HTTP.start(uri.hostname, uri.port, use_ssl: true) { |http| http.request(request) }
-
-puts JSON.pretty_generate(JSON.parse(response.body))</code></pre>
-            </div>
-
-            <div id="python" class="python code-block hidden">
-              <pre><code class="language-python">import requests
-
-url = "https://www.pullapi.com/api/v1/serp?search_engine=duckduckgo&pages_number=2&query=tesla"
-headers = {
-    "Authorization": "Bearer YOUR_API_TOKEN",  # Replace with your actual API token
-    "Accept": "application/json"
-}
-
-response = requests.get(url, headers=headers)
-
-# Print the formatted JSON response
-print(response.json())</code></pre>
-            </div>
-
-            <h4 class="text-lg font-semibold mt-6 mb-2">Response</h4>
-            <pre><code class="language-json">{
-  "response": {
-    "data": {
-      "serp": [
-        {
-          "site_name": "Aramisauto",
-          "url": "https://duckduckgo.com/y.js?ad_domain=aramisauto.com&ad_provider=bingv7aa&ad_type=txad&click_metadata=6HSno15e28hCDcnmcrb_A2pmqoJYJwX_hvwC58LKxltbLSSAOZ325KLWNg8mGHWbt%2D3GRex%2D2PJze8%2DPdVseF2mC2b4oVFMGgwWDDvW%2DIoAo8FXrdGBeBYqpvwve5Q%2DK.Fz7YbFk_k96xDO8KDfwbig&eddgt=5y7mQRZ1J5gMSfV9mQuDxg%3D%3D&rut=1264fed111d73c0dfd8e032557df75d58643ed613002dff82700432d882fc01b&u3=https%3A%2F%2Fwww.bing.com%2Faclick%3Fld%3De8kuai9mIMYT9QFVU1uTAihzVUCUw2g570HYDYrFpq8Qi2x6tm8p7AcEU3tsYFcpRdSqtvToSeLB6ul_ktPSLrSa%2Do4kpJgnIz73saXD_X0kpvdooI9RdWdYKo2ZwZot64Iz_Yktiqp%2D0kGpQGix2TEnW1mFTiGRtLn5GGOJCO9X8S4OZKD7JOTK%2DTgL_sF91cb4RP5w%26u%3DaHR0cHMlM2ElMmYlMmZ3d3cuYXJhbWlzYXV0by5jb20lMmZ2b2l0dXJlcyUyZnRlc2xhJTJmbW9kZWwteCUyZm9mZnJlcyUyZiUzZmNtcGlkJTNkcHNfa3lfTVNOX1ZOX1NFQVJDSF9HRU5fTU9ERUxFJTI2bXNjbGtpZCUzZDM1NjczOGZmMjA5OTFjYWNiYzY3NWYxOThmMWI2Mjc1JTI2dXRtX3NvdXJjZSUzZGJpbmclMjZ1dG1fbWVkaXVtJTNkY3BjJTI2dXRtX2NhbXBhaWduJTNkVk5fU0VBUkNIX0dFTl9NT0RFTEVfTkVXJTI2dXRtX3Rlcm0lM2R0ZXNsYSUyNTIwbW9kZWwlMjUyMHglMjZ1dG1fY29udGVudCUzZFRlc2xhJTI1MjBNb2RlbCUyNTIwWA%26rlid%3D356738ff20991cacbc675f198f1b6275&vqd=4-102996141944316983333655616807852445662&iurl=%7B1%7DIG%3D2A69C2F15D4549EDA278491841792DE1%26CID%3D187F10F6DF406B121892054BDE176A43%26ID%3DDevEx%2C5047.1",
-          "title": "neufs Tesla Model X | Avec ou Sans Apport Ad",
-          "description": "Véhicules neufs et suréquipés. Devis simple et rapide en ligne. Tesla Model X? Votre Voiture Neuve Ou Occasion Livrée chez Vous en 24H",
-          "position": 1
-        },
-        {
-          "site_name": "Tesla",
-          "url": "https://www.tesla.com/",
-          "title": "Tesla",
-          "description": "Tesla accelerates the world's transition to sustainable energy with electric cars, solar, and integrated renewable energy solutions for homes and businesses.",
-          "position": 2
-        }
-      ]
-    }
-  }
-}</code></pre>
-          </div>
-        </div>
-      </div>
 
       <div class="bg-white rounded-lg shadow-md" id="hf_inference_endpoint">
         <button class="toggle-accordion w-full px-6 py-4 text-left focus:outline-none hover:cursor-pointer" data-endpoint="hf_inference">
